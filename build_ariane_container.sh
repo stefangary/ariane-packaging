@@ -9,6 +9,7 @@
 #===========================
 
 # Copy over the container contents
-gsutil rsync -r gs://viking20/ariane_container ./
+gsutil rsync -r gs://viking20/ariane_container/ ./ariane_container/
 
 # Build the container
+docker build -t ariane_container .
