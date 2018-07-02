@@ -1,0 +1,10 @@
+#!/bin/bash -norc
+#===========================
+# This software is distributed under
+# the terms of the GNU GPL, v3 and
+# any later version.
+# Copyright, Stefan Gary
+#===========================
+# Build the ARIANE container
+#===========================
+
