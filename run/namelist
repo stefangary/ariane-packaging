@@ -1,0 +1,125 @@
+&ARIANE                                  ! These elements are required to start ARIANE
+  key_roms             = .FALSE. ,       ! False if using ORCA data, True for ROMS data.
+  key_symphonie        = .FALSE. ,       ! ...undocumented...not necessary in namelist...default=F
+  key_B2C_grid         = .FALSE. ,       ! Input data is on a B grid, interpolate to C grid.
+  key_sequential       = .TRUE. ,        ! If .TRUE., will recycle over snapshots - T just in case.
+  key_alltracers       = .FALSE. ,       ! Access to T, S, and density. FALSE => kinematics only.
+  key_ascii_outputs    = .FALSE. ,	 ! ...undocumented...
+  key_iU_jV_kW         = .TRUE. ,        ! If .TRUE. report ALL traj positions on i on u-grid,
+                                         ! j on v-grid, and k on w-grid in addition to lon,lat,depth.
+  mode                 = 'qualitative',  ! Choose qualitative or quantitative mode.
+  forback = 'forward',                   ! Forward in time trajectories.
+  bin                  = 'nobin',        ! nobin  => qual mode, init pos from file inital_positions
+                                         !           quant mode, init pos on sect 1, file segments
+				         ! bin    => both modes, init pos from binary file initial.bin
+				         ! subbin => both modes, subset of initial.bin in file subset
+  nmax                 = 46126,          ! Max number of particles.
+  tunit                = 86400.,         ! Smallest time unit for input; 86400 = 24*60*60 seconds
+  ntfic                = 5,		 ! T,U,V,W field sampling time, integer multiples of tunit.
+  tcyc                 =                 ! ...undocumented...default='value will be computed later"
+  !key_approximatesigma = .TRUE.         ! ?
+  key_computesigma     = .TRUE. ,        ! Linear interpolation of density field for particle density.
+  !zsigma               = 0.0 ,          ! Reference depth at which to compute density (sigma_n), [m].
+  !memory_log           = .TRUE. ,       ! If .TRUE., memory log is output?
+  !output_netcdf_large_file = .FALSE. ,  ! Large (64bit?) netCDF files? --enable-hdf5 at compile, not needed?
+/
+&QUANTITATIVE                            ! This block is ignored if mode = 'qualitative'
+  key_eco              = .TRUE.,	 ! Set T to reduce CPU time, cuts down on 'annexe' operations.
+  key_reducmem         = .TRUE.,	 ! If True, reduce memory, read only quant-mode region.
+  key_unitm3           = .TRUE.,	 ! If True, transports given in m^3/s rather than Sverdrups.
+  key_nointerpolstats  = .TRUE.,	 ! If True, no statistical interpolations.
+  max_transport        = 1.e4		 ! In m^3/s, max transport per particle. Usual options:
+  		       	 		 !  1.e9 => one particle per model gridcell.
+					 !  1.e4 => typical choice = 1e-2 Sv.
+					 ! NOTE: Smaller max_xport = more floats = more CPU time
+/
+&QUALITATIVE				 ! This block is ignored if mode = 'quantitative'
+  delta_t              = 86400.,	 ! Choose convenient time, [s] (1 day = 86400, 1hour =3600).
+  frequency 	       = 1,		 ! Freq. of traj pos. updates, integer multipe of delta_t [s].
+  nb_output 	       = 365,		 ! ARIANE runs until all traj have this # pts in traj.
+  mask      	       = .TRUE.,	 ! To suppress land points.
+  key_larvae           = .TRUE.,         ! Enable active swimming based on larval_behaviors.txt
+/
+&SEQUENTIAL
+  key_interp_temporal  = .TRUE.,
+  maxcycles            = 1,
+/
+&OPAPARAM				 ! This block is ignored if key_roms = .TRUE.
+  imt      = 1784,			 ! Number grid points in i (longitudinal) direction.
+  jmt      = 1719,			 ! Number grid points in j (latitudinal) direction.
+  kmt      = 46,			 ! Number grid points in k (depth) direction.
+  lmt      = 73,			 ! Number timesteps over which to cycle, NOT per file!
+  key_computew     = .TRUE.,		 ! Compute vertical transport from horizontal velocity fields.
+  key_partialsteps = .TRUE.,		 ! Take into account partial steps in model bathymetry.
+  key_jfold        = .FALSE.,		 ! Account for periodic latitude in OPA-ORCA grids.
+  key_periodic     = .FALSE.,		 ! Account for periodic longitude in OPA-ORCA grids.
+/
+&ZONALCRT				 ! Zonal Current (u velocity) data specifics
+  c_dir_zo     = './DATA',	     	 ! Directory path for data files (usually a list of links).
+  c_prefix_zo  = 'VIKING20_',    	 ! File name prefix ('NONE' is an option).
+  ind0_zo      = 10001,	       		 ! Begin int val (-1 no cycling)| File names for a variable
+  indn_zo      = 10073,	       		 ! End int val (-1 no cycling)  | increment monotonically by 1
+  maxsize_zo   = 5,			 ! Number of digits of integer filenumber (-1 => no cycling)
+  c_suffix_zo  = '_grid_U.nc',		 ! Suffix of file name ('NONE' is an option).
+  nc_var_zo    = 'vozocrtx',		 ! NetCDF variable name.
+  nc_var_eivu  = 'NONE',		 ! NetCDF eiv variable name, eddy induced velocity (i.e. GM90)
+  nc_att_mask_zo = 'missing_value',	 ! Mask or missing value.
+/
+&MERIDCRT				 ! Meridional Current (v velocity) data specifics
+  c_dir_me     = './DATA',		 ! Directory path for data files (usually a list of links).
+  c_prefix_me  = 'VIKING20_',      	 ! File name prefix ('NONE' is an option).
+  ind0_me      = 10001,			 ! Begin int val (-1 no cycling)| File names for a variable
+  indn_me      = 10073,			 ! End int val (-1 no cycling)  | increment monotonically by 1
+  maxsize_me   = 5,			 ! Number of digits of integer filenumber (-1 => no cycling)
+  c_suffix_me  = '_grid_V.nc',		 ! Suffix of file name ('NONE' is an option).
+  nc_var_me    = 'vomecrty',		 ! NetCDF variable name.
+  nc_var_eivv  = 'NONE',		 ! NetCDF eiv variable name.
+  nc_att_mask_me = 'missing_value',	 ! Mask or missing value.
+/
+!&VERTICRT				 ! Vertical Current (w velocity) data specifics
+!  c_dir_ve     = './DATA',		 ! Directory path for data files (usually a list of links).
+!  c_prefix_ve  = 'ORCA025_',     	 ! File name prefix ('NONE' is an option).
+!  ind0_ve      = 1001,			 ! Begin int val (-1 => no cycling)| File names for a variable
+!  indn_ve      = 2824,			 ! End int val (-1 => no cycling)  | increment by 1
+!  maxsize_ve   = 4,			 ! Number of digits of integer filenumber (-1 => no cycling)
+!  c_suffix_ve  = '_grid_W.nc',		 ! Suffix of file name ('NONE' is an option).
+!  nc_var_ve    = 'vovecrtz',		 ! NetCDF variable name.
+!  nc_var_eivw  = 'NONE',		 ! NetCDF eiv variable name.
+!  nc_att_mask_ve = 'missing_value',	 ! Mask or missing value.
+!/
+!&TEMPERAT				 ! Temperature data specifics
+!  c_dir_te     = './DATA',		 ! Directory path for data files (usually a list of links).
+!  c_prefix_te  = 'VIKING20_',	         ! File name prefix ('NONE' is an option).
+!  ind0_te      = 10001,		 ! Begin int val (-1 no cycling)| File names for a variable
+!  indn_te      = 10009,		 ! End int val (-1 no cycling)  | increment monotonically by 1
+!  maxsize_te   = 5,			 ! Number of digits of integer filenumber (-1 => no cycling)
+!  c_suffix_te  = '_grid_T.nc',		 ! Suffix of file name ('NONE' is an option).
+!  nc_var_te    = 'votemper',		 ! NetCDF variable name.
+!  nc_att_mask_te = 'missing_value',	 ! Mask or missing value.
+!/
+!&SALINITY				 ! Salinity data specifics
+!  c_dir_sa     = './DATA',		 ! Directory path for data files (usually a list of links).
+!  c_prefix_sa  = 'VIKING20_',     	 ! File name prefix ('NONE' is an option).
+!  ind0_sa      = 10001,		 ! Begin int value (-1 no cycling)| File names for a variable
+!  indn_sa      = 10009,		 ! End int val (-1 => no cycling) | increment by 1
+!  maxsize_sa   = 5,			 ! Number of digits of integer filenumber (-1 => no cycling)
+!  c_suffix_sa  = '_grid_T.nc',		 ! Suffix of file name ('NONE' is an option).
+!  nc_var_sa    = 'vosaline',		 ! NetCDF variable name.
+!  nc_att_mask_sa = 'missing_value',	 ! Mask or missing value.
+!/
+&MESH					 ! Model grid data specifics
+  dir_mesh     = './', 
+  fn_mesh      = 'mesh_mask.nc',
+  nc_var_xx_tt = 'glamt', 
+  nc_var_xx_uu = 'glamu',  
+  nc_var_yy_tt = 'gphit', 
+  nc_var_yy_vv = 'gphiv', 
+  nc_var_zz_ww = 'gdepw_0',
+  nc_var_e2u   = 'e2u', 
+  nc_var_e1v   = 'e1v', 
+  nc_var_e1t   = 'e1t', 
+  nc_var_e2t   = 'e2t', 
+  nc_var_e3t   = 'e3t',
+  nc_var_tmask = 'tmask',
+  nc_mask_val  = 0.,
+/
