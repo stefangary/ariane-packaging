@@ -13,5 +13,8 @@ gsutil rsync -r gs://viking20/ariane_container/ ./ariane_container/
 
 # Build the container
 cd ariane_container
+# Always need to manually specify execute permissions
+# on scripts stored on gs://viking20?
 chmod a+x test.sh
+chmod a+x install_netCDF4.sh
 docker build -t ariane_container .

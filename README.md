@@ -11,7 +11,8 @@ This is only done once in a blue moon when the code of
 ARIANE, netcdf (and dependencies), or tcdf is changed
 and changes need to be incorporated into the container.
 The script **build_ariane_container.sh** automates this
-process.
+process.  Call it directly from the larval-parameter-sweep-src
+directory.
 
 # Step 2: Preparing the node for a parallel run
 
