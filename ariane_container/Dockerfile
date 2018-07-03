@@ -51,6 +51,6 @@ RUN cd ariane-2.2.8_05_larval; ./configure --prefix=/usr; make; make install; cd
 
 # Install tcdf visualization tools
 RUN git clone https://github.com/stefangary/tcdf.git
-RUN cd tcdf/src; set_tcdf_prefix.sh /usr; make tcdf; make install; cd ../../
+RUN cd tcdf/src; ./set_tcdf_prefix.sh /usr; make tcdf; make install; cd ../../
 
 CMD ["echo", "Hello from Docker!"]
