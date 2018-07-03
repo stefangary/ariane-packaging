@@ -12,4 +12,5 @@
 gsutil rsync -r gs://viking20/ariane_container/ ./ariane_container/
 
 # Build the container
+cd ariane_container
 docker build -t ariane_container .
