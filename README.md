@@ -14,6 +14,28 @@ The script **build_ariane_container.sh** automates this
 process.  Call it directly from the larval-parameter-sweep-src
 directory.
 
+To store the container in a repository:
+ 
++ first, start the container​ with a name​,
+ 
+     - docker run -it --name=new_container_name old_container_name  /bin/bash
+ 
++ second, detach from the container w/ cntl​ ​p-q or open new terminal
+ 
++ third, commit the started container,
+
+     - docker commit new_container_name repository/new_container_name
+ 
++ Create a new handle in your docker account called new_container_name
+ 
++ Finally, push the image to that handle
+
+    - docker push repository/new_container_name
+
++ Then, one can pull that container with:
+
+    - docker pull repository/new_container_name
+
 # Step 2: Preparing the node for a parallel run
 
 Input files need to be copied to the node with **setup_node.sh**.
@@ -45,4 +67,4 @@ the ./run directory.
 
 # Step 4: Copy the output to long-term storage
 
-Not implemented yet.  gs://viking20?
+Not implemented yet.  gs://viking20?16a17,34
