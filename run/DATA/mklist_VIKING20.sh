@@ -32,7 +32,7 @@ season=$2
 
 # Specify the name of the directory in which all
 # the files are stored and the domain used.
-datdir='/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV/tsplit_1_VIKING20-K301_5d_'
+datdir='/app/data/tsplit_1_VIKING20-K301_5d_'
 domain='full'
 
 # Specify the name of the directory to send
@@ -56,51 +56,51 @@ do
 	     do
 		 let yy=$year-1
 		 #echo $yy
-		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     for tsplit_num in {101..167} # Follow through for the rest of the year
 	     do
-		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     ;;
 	#===============SPRING====================
 	MAM) for tsplit_num in {113..173} # Start links in March of this year, continue to end of year
 	     do
-		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     for tsplit_num in {101..112} # Follow through for rest of year with next year's data
 	     do
 		 let yy=$year+1
-		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     ;;
 	#===============SUMMER====================
 	JJA) for tsplit_num in {131..173} # Start links in June of this year, continue to end of year
 	     do
-		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     for tsplit_num in {101..130} # Follow through for rest of year with next year's data
 	     do
 		 let yy=$year+1
-		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     ;;
 	#===============FALL====================
 	SON) for tsplit_num in {167..173} # Start links in Sept. of this year, continue to end of year
 	     do
-		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${year}0101_${year}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     for tsplit_num in {101..166} # Follow through for rest of year with next year's data
 	     do
 		 let yy=$year+1
-		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.ncl
+		 ln -s ${datdir}${yy}0101_${yy}1231_${domain}_${tsplit_num}_grid_${grid}.nc ${targetdir}/${prefix}${filenum}_grid_${grid}.nc
 		 let filenum++
 	     done
 	     ;;    

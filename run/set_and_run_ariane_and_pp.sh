@@ -38,10 +38,17 @@ cd ${rundir}
 #------------------------------------------
 # 2) Create links for critical files
 #------------------------------------------
-ln -sv ../run/namelist ./
-ln -sv ../run/mesh_mask.nc ./
-ln -sv ../run/initial_positions.txt ./
-ln -sv ../run/DATA ./
+ln -sv ../namelist ./
+ln -sv ../mesh_mask.nc ./
+ln -sv ../initial_positions.txt ./
+#ln -sv ../DATA ./ # This does not work if DATA is full of links, ARIANE crashes following link of link.
+mkdir ./DATA
+cd DATA
+ln -sv ../../DATA/mklist_VIKING20.sh ./
+./mklist_VIKING20.sh 1962 DJF
+cd ../
+ln -sv ../build_larval_behaviour.sh ./
+ln -sv ../split_file.txt ./
 
 #------------------------------------------
 # 3) Set larval params for this run
@@ -53,6 +60,8 @@ ln -sv ../run/DATA ./
 # run from initial_positions.txt - the
 # unchanging launch locations of the larvae.
 ./build_larval_behaviour.sh $1 $2 $3 $4 $5
+
+ncdump -h mesh_mask.nc
 
 #------------------------------------------
 # 4) Run ARIANE
