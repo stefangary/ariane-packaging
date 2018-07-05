@@ -126,7 +126,7 @@ d1_list_target='3'
 # good practice, but I'm doing that here as a
 # first try and for these purposes appears to work
 # fine.
-sudo docker run --rm --name=ariane_container -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep-src/run:/app/run -w/app/run ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target
+sudo docker run --rm --name=ariane_container -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep-src/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target
 
 			    
 # Get rid of copied input data.
