@@ -47,9 +47,14 @@ rm -f ariane_trajectories_qualitative.nc
 #=========================================
 # Postprocessing step 2 - split
 #=========================================
+# Split traj by larval perturbation
+/usr/bin/tcdfsplit -N 46126 -I t.cdf -J
+
 # Spilt trajectories by Case Study
 # NOT IMPLEMENTED YET FOR SIMPLICITY
-# tcdfsplit
+# foreach file ( t_*.cdf )
+#/usr/bin/tcdfsplit -F split_file.txt -I $file -J
+# end
 
 #=========================================
 # Postprocessing step 3 - spatial histogram
