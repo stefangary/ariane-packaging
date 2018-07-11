@@ -12,5 +12,5 @@
 # with all params.
 #=======================================
 
-docker run --rm --name=ariane_container -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep-src/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp_single_run.sh &> run.log &
+docker run --rm --name=ariane_container -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp_single_run.sh &> run.log &
 
