@@ -82,20 +82,15 @@ look for inter- and intra-annual
 variability in spreading.
 
 In summary:
-* There are some input files that
-  do not change, ever:
-  initial_positions.txt - launch locations, set for EACH particle.
-  namelist -------------- basic ARIANE behavior
-  mesh_mask.nc ---------- bathymetry of the ocean
++ There are some input files that do not change, ever:
+    - initial_positions.txt - launch locations, set for EACH particle
+    - namelist - basic ARIANE behavior
+    - mesh_mask.nc - bathymetry of the ocean
+    - V20_full_\<avg|var\>\_TSDQAUV_nopack_v2.nc - mean and variance bottom properties from VIKING20 for optional postprocessing.
 
-* There is one main parameter file that
-  does change with each run:
-  larval_behaviour.txt -- larval swimming, set for EACH particle.
++ There is one main parameter file that does change with each run, larval_behaviour.txt, which specifies larval swimming for EACH particle.
 
-* There is a large input data set (7592 files)
-  that does not change, but individual runs in
-  ARIANE will only access subsets (146 files)
-  at a time.
++ There is a large input data set (7592 files) that does not change but individual runs in ARIANE will only access subsets (146 files) at a time.
 
 # Step 1: Preparing the node for a parallel run
 
@@ -131,4 +126,5 @@ the ./run directory.
 
 # Step 4: Copy the output to long-term storage
 
-Not implemented yet.  gs://viking20?16a17,34
+Not implemented yet.  gs://viking20?
+
