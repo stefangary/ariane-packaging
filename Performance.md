@@ -110,12 +110,12 @@ running at the same time, being 1.5 hours.  The non-premptable
 cost is about 2x more.
 
 Although it is tempting to pursue the finest grain parallelization
-possible, the duplicated RAM useage and high I/O needs of concurrent
+possible, the duplicated RAM usage and high I/O needs of concurrent
 ARIANE containers can make the finest grain parallelization much more
 expensive and not that much faster than an intermediate-level
 parallelization.  Even the intermediate-level parallelization option
-parallelizes both the I/O bottleneck and the CPU time across 200 instances.
-Furthermore, for a relatively small increment in cost, we can switch
-from premptable to non-premptable resources making it easier to
-manage the 200 instances.
+has the potential to parallelize both the I/O bottleneck and the CPU
+time across 200 instances. Furthermore, for a relatively small increment
+in cost, we can switch from premptable to non-premptable resources
+making it easier to manage the 200 instances.
 
