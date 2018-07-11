@@ -96,16 +96,16 @@ run the simulation, it looks like we can run 32 instances
 in about an hour (30 minutes compute time + 30 minute data
 copy time) on a 32 core x 416GB RAM node.  The cost
 for a 32core, 416GB RAM, 200GB SSD, premptable machine would be:
-$0.884 per hour x 1 hour run time x 200 instances = $177
-...with the minimum total run time, assuming all 200 instances
+$0.884 per hour x 1 hour run time x 200 instances = $177 
+with the minimum total run time, assuming all 200 instances
 running at the same time, being 1 hour.  The non-premptable
 cost is about 3.2x more.
 
 The alternative, to run all 32 types of larval swimming in
 one, slower instance (1 hour compute time + 30 min. data copy time)
 using a 2 core, 18GB RAM, 200GB SSD, premptable machine would be:
-$0.083 per hour x 1.5 hour run time x 200 instances = $25
-...with the minimum total run time, assuming all 200 instances
+$0.083 per hour x 1.5 hour run time x 200 instances = $25 
+with the minimum total run time, assuming all 200 instances
 running at the same time, being 1.5 hours.  The non-premptable
 cost is about 2x more.
 
@@ -113,10 +113,9 @@ Although it is tempting to pursue the finest grain parallelization
 possible, the duplicated RAM useage and high I/O needs of concurrent
 ARIANE containers can make the finest grain parallelization much more
 expensive and not that much faster than an intermediate-level
-parallelization.  Even the intermediate-level parallelization parallelizes
-both the I/O bottleneck and the CPU time across 200 instances.
-My stand-alone workstation would still take 200 hours (8.3 days) to
-execute these runs because of the RAM limits. Furthermore, for a relatively
-small increment in cost, we can switch from premptable to non-premptable
-resources making it easier to manage the 200 instances.
+parallelization.  Even the intermediate-level parallelization option
+parallelizes both the I/O bottleneck and the CPU time across 200 instances.
+Furthermore, for a relatively small increment in cost, we can switch
+from premptable to non-premptable resources making it easier to
+manage the 200 instances.
 
