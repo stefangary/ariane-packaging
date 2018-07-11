@@ -119,12 +119,13 @@ using the scripts and small specification file in
 the ./run directory.
 
 + Run scripts:
-    - run_ariane_and_postprocess.sh
-    - set_and_run_ariane_and_pp.sh <----BEST ONE
+    - run_ariane_and_postprocess.sh <---Original testing with Docker
+    - set_and_run_ariane_and_pp.sh <----**BEST** because used for concurrent Docker runs
     
-+ split_file.txt
++ Files used for visualization
+    - split_file.txt
+    - V20_full_\<avg|var\>\_TSDQAUV_nopack_v2.nc
 
 # Step 4: Copy the output to long-term storage
-
 Not implemented yet.  gs://viking20?
 
