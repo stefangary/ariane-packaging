@@ -1,70 +1,61 @@
-# larval-parameter-sweep-src
+# larval-parameter-sweep
 
-Scripts necessary for running parallel instances of ARIANE
-I chose to keep this separate from the project
-larval-parameter-sweep-doc because the docs could get bigger
-with fancy images.
+The goal of this project is to parallelize
+a coral larvae simulation in order to test
+the sensitivity of larval spreading
+to larval swimming behavior.
 
-# Step 1: Building the container
+This README documents the installation,
+data flow logic and performance
+characteristics of the calculations
+resulting from this project.
 
-This is only done once in a blue moon when the code of
-ARIANE, netcdf (and dependencies), or tcdf is changed
-and changes need to be incorporated into the container.
-The script **build_ariane_container.sh** automates this
-process.  Call it directly from the larval-parameter-sweep-src
-directory.
+# Overview
 
-To store the container in a repository:
- 
-+ first, start the container​ with a name​,
- 
-     - docker run -it --name=new_container_name old_container_name  /bin/bash
- 
-+ second, detach from the container w/ cntl​ ​p-q or open new terminal
- 
-+ third, commit the started container,
+The core simulation is executed by the
+ARIANE software distributed under a
+CeCILL license.  ARIANE is single
+threaded and written in FORTRAN 90
+by Bruno Blanke and Nicholas Grima
+at the University of Brest, France.
+ARIANE inputs a velocity field (e.g.
+the output of an ocean model) and
+computes the trajectories of particles
+as they move along streamlines in
+the flow.
 
-     - docker commit new_container_name repository/new_container_name
- 
-+ Create a new handle in your docker account called new_container_name
- 
-+ Finally, push the image to that handle
+Alan Fox and I have designed a modified
+version of ARIANE that superposes active
+vertical swimming, associated with coral
+larvae when they are released by their
+parents, onto the purely advective movement
+of particles computed by ARIANE.  Since
+the actual behavior of coral larvae is
+poorly understood, we want to test a
+range of different swimming behaviors
+to see if they have a significant impact
+on the spreading of larvae compared to
+pure advection of particles by the currents.
 
-    - docker push repository/new_container_name
+A more in-depth summary of the science
+and types of swimming behavior are in
+./doc/coral_behavior_scope.pdf.
 
-+ Then, one can pull that container with:
+I have subdivided the documentation into
+separate files:
 
-    - docker pull repository/new_container_name
++ Installation.md, includes information on:
+    - installing ARIANE
+    - building an ARIANE container
 
-# Step 2: Preparing the node for a parallel run
++ DataFlow.md, includes information on:
+    - a list of the input and output files
+    - see ./doc/ARIANE larval simulation parallelization schematic.pdf
+    - running the ARIANE container
+    - visualization of ARIANE output
+    
++ Performance.md, includes information on:
+    - single runs
+    - parallel runs
+    - CPU, RAM, disk space, and data transfer needs
 
-Input files need to be copied to the node with **setup_node.sh**.
-This setup includes ~82GB for the VIKING20 velocity fields
-as well as ~5GB for the **mesh_mask.nc** grid information
-and ~300 MB for bottom properties information.  These big files
-are stored in gs://viking20.
-
-There are also smaller files  that set the parameters of
-the run - they are pulled from ./run by the ARIANE
-container during a run:
-
-+ namelist
-+ initial_positions.txt
-+ larval_behaviour.txt
-
-NOTE: larval_behaviour.txt is created locally
-at run time by **build_larval_behaviour.sh**
-during step 3, below.
-
-# Step 3: Run the simulation and postprocessing
-
-Then ARIANE and postprocessing routines need to be run
-using the scripts and small specification file in
-the ./run directory.
-
-+ run_ariane_and_postprocess.sh
-+ split_file.txt
-
-# Step 4: Copy the output to long-term storage
-
-Not implemented yet.  gs://viking20?16a17,34
