@@ -13,7 +13,7 @@
                                          !           quant mode, init pos on sect 1, file segments
 				         ! bin    => both modes, init pos from binary file initial.bin
 				         ! subbin => both modes, subset of initial.bin in file subset
-  nmax                 = 46126,          ! Max number of particles.
+  nmax                 = 1476032,          ! Max number of particles.
   tunit                = 86400.,         ! Smallest time unit for input; 86400 = 24*60*60 seconds
   ntfic                = 5,		 ! T,U,V,W field sampling time, integer multiples of tunit.
   tcyc                 =                 ! ...undocumented...default='value will be computed later"
@@ -35,8 +35,8 @@
 /
 &QUALITATIVE				 ! This block is ignored if mode = 'quantitative'
   delta_t              = 86400.,	 ! Choose convenient time, [s] (1 day = 86400, 1hour =3600).
-  frequency 	       = 1,		 ! Freq. of traj pos. updates, integer multipe of delta_t [s].
-  nb_output 	       = 365,		 ! ARIANE runs until all traj have this # pts in traj.
+  frequency 	       = 5,		 ! Freq. of traj pos. updates, integer multipe of delta_t [s].
+  nb_output 	       = 73,		 ! ARIANE runs until all traj have this # pts in traj.
   mask      	       = .TRUE.,	 ! To suppress land points.
   key_larvae           = .TRUE.,         ! Enable active swimming based on larval_behaviors.txt
 /
