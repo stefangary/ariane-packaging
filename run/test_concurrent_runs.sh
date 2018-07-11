@@ -154,7 +154,7 @@ do
 			    # first try and for these purposes appears to work
 			    # fine.
 			    #
-			    docker run -v/home/ubuntu/larval-parameter-sweep-src/run:/app/run -w/app/run --rm --name=ariane_container stefanfgary/ariane ./run_ariane_and_postprocess.sh
+			    docker run -v/home/ubuntu/larval-parameter-sweep/run:/app/run -w/app/run --rm --name=ariane_container stefanfgary/ariane ./run_ariane_and_postprocess.sh
 			    
 			    #------------------------------------------
 			    # 5c) Track files by year and season and clean up

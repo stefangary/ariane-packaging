@@ -21,7 +21,7 @@
 #---------------------------------------------
 # (You need to do this first so you can access
 #  THIS script!!)
-#git clone https://github.com/stefangary/larval-parameter-sweep-src.git
+#git clone https://github.com/stefangary/larval-parameter-sweep.git
 #
 #---------------------------------------------
 # 1) Set input and output locations/file naming
