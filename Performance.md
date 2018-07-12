@@ -2,7 +2,7 @@
 
 The biggest challenge in this project is the I/O bottleneck, followed by RAM needs and, finally, CPU needs.
 
-# Copying data to node
+# Copying data to node - first test with 8 CPUs
 
 A first test for copying data to a
 node results in 108 files copied over
@@ -22,7 +22,20 @@ https://cloud.google.com/storage/docs/gsutil/addlhelp/CRC32CandInstallingcrcmod
 
 ...but I was not able to complete the uninstall step therein.
 
-# Running a single instance
+# Copying data to node - second test with 32 CPUs
+
+Installing Docker and other key software to the node as required
+in setup_node.sh is very fast, at about ~3 minutes, including
+pulling the container.
+
+I'm curious to see if the data copy time is faster with a VM
+with 32 CPUs since GCE seems to tie bandwidth to number of CPUs.
+A first attempt results in 88GB copied over in 16:11:81 min = 972 s.
+This is equivalent to: 88GB * 8 Gbits/1GB / 972s = 0.72 Gbit/s.
+The transfer speed of the second test is a 50% increase over the
+first test with a smaller number of CPU.
+
+# Running a single instance - 1st attempt on a stand alone workstation
 
 Our goal is to simulate 46,126 particles over one year.
 We will add 32 different perturbations to the particle
@@ -34,7 +47,7 @@ in a software RAID0 configuration, a single full-domain
 instance takes 28 minutes.  This is about 13 minutes longer
 than my initial estimates because I did not account for
 the larger domain of the simulation.  If this
-is an issue for using premptive resources, then 6 month
+is an issue for using preemptive resources, then 6 month
 long tracks (scaling the calculation back by 50%) is
 possible.
 
@@ -47,6 +60,13 @@ The simulation required at most 13GB of RAM.
 
 28 minutes includes the most expensive post-processing step
 which takes about ~30 seconds to a minute.
+
+# Running a single instance on a GCE VM
+
+This test is the same as the previous case but this time
+on a GCE node with the data pre-copied onto an SSD.
+
+
 
 # Running two or more instances at the same time
 
@@ -95,18 +115,18 @@ Counting the time to copy data and the time to actually
 run the simulation, it looks like we can run 32 instances
 in about an hour (30 minutes compute time + 30 minute data
 copy time) on a 32 core x 416GB RAM node.  The cost
-for a 32core, 416GB RAM, 200GB SSD, premptable machine would be:
+for a 32core, 416GB RAM, 200GB SSD, preemptable machine would be:
 $0.884 per hour x 1 hour run time x 200 instances = $177 
 with the minimum total run time, assuming all 200 instances
-running at the same time, being 1 hour.  The non-premptable
+running at the same time, being 1 hour.  The non-preemptable
 cost is about 3.2x more.
 
 The alternative, to run all 32 types of larval swimming in
 one, slower instance (1 hour compute time + 30 min. data copy time)
-using a 2 core, 18GB RAM, 200GB SSD, premptable machine would be:
+using a 2 core, 18GB RAM, 200GB SSD, preemptable machine would be:
 $0.083 per hour x 1.5 hour run time x 200 instances = $25 
 with the minimum total run time, assuming all 200 instances
-running at the same time, being 1.5 hours.  The non-premptable
+running at the same time, being 1.5 hours.  The non-preemptable
 cost is about 2x more.
 
 Although it is tempting to pursue the finest grain parallelization
@@ -116,6 +136,6 @@ expensive and not that much faster than an intermediate-level
 parallelization.  Even the intermediate-level parallelization option
 has the potential to parallelize both the I/O bottleneck and the CPU
 time across 200 instances. Furthermore, for a relatively small increment
-in cost, we can switch from premptable to non-premptable resources
+in cost, we can switch from preemptable to non-preemptable resources
 making it easier to manage the 200 instances.
 

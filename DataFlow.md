@@ -96,7 +96,13 @@ In summary:
 
 Software and data need to be put on the node with two scripts:
 
-+ **setup_node.sh** will install necessary software.  After development is done, this script will only need to be run once, an image will be taken of the VM disk, and then can be used later.
++ on GCE, select a node with 32 cores, 416GB RAM, 200GB SSD, preemptible.
+
++ **setup_node.sh** will install necessary software.  After development is done, this script will only need to be run once, an image will be taken of the VM disk, and then can be used later. Automating docker login doesn't seem to work, so at the command line, you need to type:
+    - sudo docker login
+    - sudo docker pull stefanfgary/ariane
+
++ Information about taking and restarting an image of this machine will go here.
 
 + **copy_data_to_node.sh** will copy input files to the node. This stage of setup includes ~82GB for the VIKING20 velocity fields as well as ~5GB for the **mesh_mask.nc** grid information and ~300 MB for bottom properties information.  These big files are stored in gs://viking20.
 
