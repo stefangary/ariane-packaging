@@ -34,6 +34,8 @@ sudo apt-get -y upgrade
 # when it comes time for production.
 sudo apt-get -y install htop
 sudo apt-get -y install emacs
+git config --global user.email "stefanfgary@gmail.com"
+git config --global user.name "stefanfgary"
 
 #---------------------------------------------
 # 3) Install Docker
