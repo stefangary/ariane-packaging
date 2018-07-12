@@ -13,7 +13,7 @@
                                          !           quant mode, init pos on sect 1, file segments
 				         ! bin    => both modes, init pos from binary file initial.bin
 				         ! subbin => both modes, subset of initial.bin in file subset
-  nmax                 = 1476032,          ! Max number of particles.
+  nmax                 = 46126,          ! Max number of particles.
   tunit                = 86400.,         ! Smallest time unit for input; 86400 = 24*60*60 seconds
   ntfic                = 5,		 ! T,U,V,W field sampling time, integer multiples of tunit.
   tcyc                 =                 ! ...undocumented...default='value will be computed later"

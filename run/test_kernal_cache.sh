@@ -114,7 +114,7 @@
 t1_list_rampup='0.0'
 t2_list_surfag='345600.0'
 s1_list_swimup='0.00020'
-s2_list_swimdn='0.00100'
+s2_list_swimdn='0.00020'
 d1_list_target='3'
 
 # The script called here engages both
@@ -126,15 +126,11 @@ d1_list_target='3'
 # good practice, but I'm doing that here as a
 # first try and for these purposes appears to work
 # fine.
-docker run --rm --name=ariane_container1 -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run4.log &
+#----------------EXAMPLE FOR STANDALONE WORKSTATION------------------
+#docker run --rm --name=ariane_container1 -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run1.log &
 
-t1_list_rampup='864000.0'
-
-docker run --rm --name=ariane_container2 -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run5.log &
-
-s1_list_swimup='0.00100'
-
-docker run --rm --name=ariane_container3 -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run6.log &
+#----------------EXAMPLE FOR GCE NODE------------------
+docker run --rm --name=ariane_container1 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run1.log &
 
 # Don't put sudo here if you want to put it in the background!
 # Be careful you have different container names!!!
