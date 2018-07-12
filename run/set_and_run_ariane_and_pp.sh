@@ -41,12 +41,12 @@ cd ${rundir}
 ln -sv ../namelist ./
 ln -sv ../mesh_mask.nc ./
 ln -sv ../initial_positions.txt ./
-#ln -sv ../DATA ./ # This does not work if DATA is full of links, ARIANE crashes following link of link.
-mkdir ./DATA
-cd DATA
-ln -sv ../../DATA/mklist_VIKING20.sh ./
-./mklist_VIKING20.sh 1962 DJF
-cd ../
+ln -sv ../DATA ./ # This does not work if DATA is full of links, ARIANE container crashes following link of link because this is not a *container* system path.
+#mkdir ./DATA
+#cd DATA
+#ln -sv ../../DATA/mklist_VIKING20.sh ./
+#./mklist_VIKING20.sh 1962 DJF
+#cd ../
 ln -sv ../build_larval_behaviour.sh ./
 ln -sv ../split_file.txt ./
 
@@ -60,8 +60,6 @@ ln -sv ../split_file.txt ./
 # run from initial_positions.txt - the
 # unchanging launch locations of the larvae.
 ./build_larval_behaviour.sh $1 $2 $3 $4 $5
-
-ncdump -h mesh_mask.nc
 
 #------------------------------------------
 # 4) Run ARIANE
