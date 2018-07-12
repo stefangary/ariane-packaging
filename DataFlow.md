@@ -94,11 +94,11 @@ In summary:
 
 # Step 1: Preparing the node for a parallel run
 
-Input files need to be copied to the node with **setup_node.sh**.
-This setup includes ~82GB for the VIKING20 velocity fields
-as well as ~5GB for the **mesh_mask.nc** grid information
-and ~300 MB for bottom properties information.  These big files
-are stored in gs://viking20.
+Software and data need to be put on the node with two scripts:
+
++ **setup_node.sh** will install necessary software.  After development is done, this script will only need to be run once, an image will be taken of the VM disk, and then can be used later.
+
++ **copy_data_to_node.sh** will copy input files to the node. This stage of setup includes ~82GB for the VIKING20 velocity fields as well as ~5GB for the **mesh_mask.nc** grid information and ~300 MB for bottom properties information.  These big files are stored in gs://viking20.
 
 There are also smaller files  that set the parameters of
 the run - they are pulled from ./run by the ARIANE
