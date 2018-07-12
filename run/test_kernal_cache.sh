@@ -86,28 +86,31 @@
 #                      use VIKING20 vertical grid spacing,
 #                      gdepw_0 in mesh_mask.nc to check!
 #------------------------------------------
-#t1_list_rampup='0.0 864000.0'
-#t2_list_surfag='345600.0 3628800.0'
-#s1_list_swimup='0.00020 0.00100'
-#s2_list_swimdn='0.00020 0.00100'
-#d1_list_target='3 13'
+t1_list_rampup='0.0 864000.0'
+t2_list_surfag='345600.0 3628800.0'
+s1_list_swimup='0.00020 0.00100'
+s2_list_swimdn='0.00020 0.00100'
+d1_list_target='3 13'
+let runnum=0
 # Loop over larval parameters
-#for t1 in $t1_list_rampup
-#do
-#    for t2 in $t2_list_surfag
-#    do
-#	for s1 in $s1_list_swimup
-#	do
-#	    for s2 in $s2_list_swimdn
-#	    do
-#		for d1 in $d1_list_target
-#		do
+for t1 in $t1_list_rampup
+do
+    for t2 in $t2_list_surfag
+    do
+	for s1 in $s1_list_swimup
+	do
+	    for s2 in $s2_list_swimdn
+	    do
+		for d1 in $d1_list_target
+		do
 #--------->INSERT COMMAND TO RUN DOCKER CONTAINER HERE
-#	      done # with d1 loop
-#	  done # with s2 loop
-#       done # with s1 loop
-#    done # with t2 loop
-#done # with t1 loop
+		    let runnum=$runnum+1
+		    docker run --rm --name=ariane_container${runnum} -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
+		done # with d1 loop
+	    done # with s2 loop
+	done # with s1 loop
+    done # with t2 loop
+done # with t1 loop
 	#----------Done with all larval params loops--------------------
 
 # Dummy single item loop limts for testing.
@@ -115,7 +118,7 @@ t1_list_rampup='0.0'
 t2_list_surfag='345600.0'
 s1_list_swimup='0.00020'
 s2_list_swimdn='0.00020'
-d1_list_target='3'
+d1_list_target='13'
 
 # The script called here engages both
 # ARIANE itself and the necessary postprocessing.
@@ -130,7 +133,10 @@ d1_list_target='3'
 #docker run --rm --name=ariane_container1 -v/md0/sa03sg/work/ariane_container_tests/larval-parameter-sweep/run:/app/run -v/md0/sa03sg/scratch/VIKING20_nest_5d/cut_ATLAS/UV:/app/data -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run1.log &
 
 #----------------EXAMPLE FOR GCE NODE------------------
-docker run --rm --name=ariane_container1 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run1.log &
+#docker run --rm --name=ariane_container2 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run2.log &
+
+#s1_list_swimup='0.00100'
+#docker run --rm --name=ariane_container3 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run3.log &
 
 # Don't put sudo here if you want to put it in the background!
 # Be careful you have different container names!!!
