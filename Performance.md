@@ -74,6 +74,7 @@ pre-copied onto the SSD (see above).  Only 10.9GB RAM was
 used and a single CPU stayed at 100% whole time.  Times are:
 + 20:05.45 minute simulation; and
 + 00:52.73 postprocessing (step 1 only).
+
 The GCE VM was substantially faster (~8 mins) than the
 standalone workstation probably because it has an SSD and
 newer CPUs.
@@ -123,6 +124,7 @@ Since the VM used only 318GB RAM, I stopped the machine, edited its RAM to 340GB
 + 49:00.63 minutes simulation time or instance #1
 + 01:35.32 minutes for postprocessing (step 1 only)
 + 52:16.96 minutes for finishing all instances.
+
 During this run, the two extra processors were only at about 5% each and RAM held steady at 318GB, as before.  However, the instances got further out of sync than in the high memory VM test case, above, with a spread of 6 time steps over the instances.  Also, there were distinct times when the CPUs ramped down to wait for disk reading.  This leads me to believe that the kernal buffer cache was not large enough to deal with the spread in the time steps.  In particular, there was only ~335GB - 318GB = 17GB free space for the kernal buffer cache.  Including the model grid information (5GB) and space for a 6-time step spread (2files x 574MB/file x 6 time steps = 6888MB = 6.7GB), the kernal would need a buffer of at least ~12GB.  For an 8-time step spread (possible at certain moments?), the cache would need to be 14GB.  Both of those estimates are less than the available 17GB overhead, so I'm not totally convinced.
 
 # Alternative - running all 32 larval perturbations in one ARIANE instance
