@@ -10,6 +10,30 @@ data flow logic and performance
 characteristics of the calculations
 resulting from this project.
 
+# Summary of multipliers here, more details below
+
+**We have:**
++ 5 different larval behaviors;
++ each larval behavior has a low and high value -> 2^5 = 32 combinations;
++ 50 years of input data;
++ 4 seasons for each year (DJF, MAM, JJA, SON); and
++ 46,126 particles launched for each season for each year.
+
+**Multiplying it out, we have:**
++ 50 years x 4 seasons/year = 200 times at which particles are launched; and
++ 32 combos of larval swimming x 200 launch times = 6400 instances.
+
+**Our strategy is to:**
++ Run all 32 simulations associated with each launch time concurrently on the same node since it takes a long time to copy data to a node and read that data to RAM.
++ 200 nodes will each run 32 simulations.  Although there is some overlap in the input data from node to node, when we start copying data to all 200 nodes, they will each start copying different files.
++ Current estimates are ~16 minutes data copy + ~32 minutes simulation run for each node.
+
+**For postprocessing we have (optional):**
++ 12 case study sites
++ 4 postprocessing steps which will take about 2 minutes for each of the 6400 instances (8 days serial running...)
++ postprocessing results can be superposed so they lend themselves well to parallelization, just as the simulation.
++ the last step of postprocessing is still under development, so only estimates here.
+
 # Overview
 
 The core simulation is executed by the
