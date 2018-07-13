@@ -158,7 +158,7 @@ cost is about 3.2x more.
 The alternative, to run all 32 types of larval swimming in
 one, slower instance (1 hour compute time + 16 min. data copy time)
 using a 2 core, 18GB RAM, 200GB SSD, preemptable machine would be:
-$0.083 per hour x 1.5 hour run time x 200 instances = $21 
+$0.083 per hour x 1.3 hour run time x 200 instances = $21 
 with the minimum total run time, assuming all 200 instances
 running at the same time, being 1.3 hours.  The non-preemptable
 cost is about 2x more.
