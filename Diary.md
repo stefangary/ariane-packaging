@@ -35,5 +35,16 @@ ParallelWorks cloud buckets) so it is easy to hit the ground running
 with a newly created instance.  For example of how I set up a node,
 see setup_node.sh.
 
-# Using the ParallelWorks interface
+# Using the ParallelWorks interface - July 16, 2018
 
+I stated using the PW interface by making a test run with the avgnum_workflow.
+As prompted by the GUI, I had to first start the compute engine, which booted
+a single node.  Then, I ran the calculation and noted that several workers
+were all automatically started by the initial worker and the calculation
+spanned all the workers (including the initial worker).  When new workers
+are created, it looks like they all start from the default image, they are
+not spawned as copies of the first worker that was created when I turn on
+the button.
+
+Next, I duplicated the avenum_workflow to make a testing environment in which
+I could start to manipulate files.  I set the theme to "Clouds-Midnight" in the text editor to reverse the colors.
