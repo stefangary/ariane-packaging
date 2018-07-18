@@ -66,7 +66,7 @@ app (file o) hostname_app_wrap ()
 # are all named: f.XXXXXX.out with the padding
 # of zeros set by the padding=6 parameter to
 # ensure always 6 digits.
-file out[]<simple_mapper; location="outdir", prefix="f.",suffix=".out",padding=6>;
+file out[]<simple_mapper; location="hostsn_outdir", prefix="f.",suffix=".out",padding=6>;
 
 # Call the hostname app wrapper a certain
 # number of times.
