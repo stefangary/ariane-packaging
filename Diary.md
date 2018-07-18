@@ -55,16 +55,4 @@ The most challenging thing I find about learning SWIFT is the paths.  That's
 not surprising - in almost every new language/environment it's the process
 of understanding where stuff *is* that is the most challenging step.
 
-Some notes:
-SWIFT tutorial and manual are out of date.
-
-SWIFT manual has out of date link to SWIFT tutorial, first paragraph.
-
-In the SWIFT guide,
-http://swift-lang.org/guides/release-0.96/quickstart/quickstart.html
-the hello.swift function that's provided does not output the
-hello.txt file as specified in the tutorial.
-
-SWIFT Manual uses filesys_mapper while it appears that FilesysMapper
-is now the correct usage.
 
