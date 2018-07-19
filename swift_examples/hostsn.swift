@@ -49,6 +49,14 @@ app (file o) hostname_app_wrap ()
   hostname stdout=filename(o);
 }
 
+# Note that it is **ESSENTIAL** that you use
+# the filenames function rather than the
+# filename function for this to work.
+app (file o) cat_file_array_app ( file[] infile )
+{
+  cat filenames(infile[*]) stdout=filename(o);
+}
+
 #================================================
 # Workflow elements
 #================================================
@@ -73,6 +81,18 @@ file out[]<simple_mapper; location="hostsn_outdir", prefix="f.",suffix=".out",pa
 foreach j in [1:num_call_hostname] {
   out[j] = hostname_app_wrap();
 }
+
+# Create a single file for all the output to go to
+file out_all <"all.log">;
+out_all = cat_file_array_app(out);
+
+#---------THIS DOES NOT WORK----------
+# You cannot append to a SWIFT file.
+# ALL SWIFT VARIABLES ARE SINGLE ASSIGNMENT
+#foreach j in [1:num_call_hostname] {
+#  out_all = hostname_app_wrap();
+#}
+
 
 #==============================================
 # Original code for reference only
