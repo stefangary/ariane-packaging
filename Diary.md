@@ -35,7 +35,7 @@ ParallelWorks cloud buckets) so it is easy to hit the ground running
 with a newly created instance.  For example of how I set up a node,
 see setup_node.sh.
 
-# Using the ParallelWorks interface - July 16, 2018
+# Using the ParallelWorks interface - July 16-19, 2018
 
 I stated using the PW interface by making a test run with the avgnum_workflow.
 As prompted by the GUI, I had to first start the compute engine, which booted
@@ -49,10 +49,39 @@ the button.
 Next, I duplicated the avenum_workflow to make a testing environment in which
 I could start to manipulate files.  I set the theme to "Clouds-Midnight" in the text editor to reverse the colors.
 
-# Using SWIFT - July 18, 2018
+It took a good deal of experimentation before I understood exactly how to pass
+variables from the GUI's form interface into the SWIFT script.  The key
+advancement in my understanding that made it easier for me to progress was
+the idea that swift is started via the command line from the GUI and all the
+parameters passed from the form are send to swift via command line flag
+options, for example: swift main.swift -n_opt=42.  The form defines the values
+on the command line and the main.swift script has to be compatible with
+the form's inputs.
+
+# Using SWIFT - July 18-19, 2018
 
 The most challenging thing I find about learning SWIFT is the paths.  That's
 not surprising - in almost every new language/environment it's the process
 of understanding where stuff *is* that is the most challenging step.
+
+Once I wrote a handy app in SWIFT to combine log files,
+app ( file out_file ) cat_file_array_app ( file[] in_file_array )
+{
+  cat filenames(in_file_array[*]) stdout=filename(out_file);
+},
+I was able to verify that all the test instances were in fact
+doing the right thing.  The other discovery that helped me was
+the bash SECONDS varible which allowed me to effectively time
+the executions of each instance within the shell script and
+post the run times to the log files.
+
+I am **astonished** and **thrilled** at how easy it is to then
+post a SWIFT workflow onto the PW interface, set the chosen
+parameters for the resources to use (e.g. number of CPUs,
+number of computers) and then just make things happen.  I also
+am impressed with the ability of the PW GUI to monitor and
+manage the amount of CPU-hours that are being consumed.  It's
+very straightforward to keep track of what's being used.
+
 
 

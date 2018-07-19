@@ -12,6 +12,7 @@ rm -f hello.out
 
 # For hostsn.swift
 rm -rf hostsn_outdir
+rm -f all.log
 
 # For array_wildcard.swift
 rm -f array_wildcard.out
