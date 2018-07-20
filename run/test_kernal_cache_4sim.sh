@@ -89,7 +89,7 @@
 t1_list_rampup='0.0'
 t2_list_surfag='345600.0'
 s1_list_swimup='0.00020 0.00100'
-s2_list_swimdn='0.00020 0.00100'
+s2_list_swimdn='0.00020'
 d1_list_target='3'
 let runnum=0
 # Loop over larval parameters
