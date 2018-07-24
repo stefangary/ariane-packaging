@@ -111,7 +111,11 @@ do
 	done # with s1 loop
     done # with t2 loop
 done # with t1 loop
-	#----------Done with all larval params loops--------------------
+#----------Done with all larval params loops--------------------
+
+# Must include this here because otherwise background
+# processes "detach" from SWIFT control.
+wait
 
 # Dummy single item loop limts for testing.
 t1_list_rampup='0.0'
