@@ -89,7 +89,7 @@
 t1_list_rampup='0.0'
 t2_list_surfag='345600.0'
 s1_list_swimup='0.00020 0.00100'
-s2_list_swimdn='0.00020 0.00100'
+s2_list_swimdn='0.00020'
 d1_list_target='3'
 let runnum=0
 # Loop over larval parameters
@@ -111,7 +111,11 @@ do
 	done # with s1 loop
     done # with t2 loop
 done # with t1 loop
-	#----------Done with all larval params loops--------------------
+#----------Done with all larval params loops--------------------
+
+# Must include this here because otherwise background
+# processes "detach" from SWIFT control.
+wait
 
 # Dummy single item loop limts for testing.
 t1_list_rampup='0.0'
