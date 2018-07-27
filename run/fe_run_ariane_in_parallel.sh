@@ -105,7 +105,7 @@ do
 		do
 #--------->INSERT COMMAND TO RUN DOCKER CONTAINER HERE
 		    let runnum=$runnum+1
-		    docker run --rm --name=ariane_container${runnum} -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
+		    docker run --rm --name=ariane_container${runnum} -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
 		done # with d1 loop
 	    done # with s2 loop
 	done # with s1 loop
@@ -134,9 +134,6 @@ d1_list_target='13'
 
 #----------------EXAMPLE FOR GCE NODE------------------
 #docker run --rm --name=ariane_container2 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run2.log &
-
-#s1_list_swimup='0.00100'
-#docker run --rm --name=ariane_container3 -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1_list_rampup $t2_list_surfag $s1_list_swimup $s2_list_swimdn $d1_list_target &> run3.log &
 
 # Don't put sudo here if you want to put it in the background!
 # Be careful you have different container names!!!

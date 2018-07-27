@@ -1,0 +1,17 @@
+#!/bin/bash -norc
+#================================
+# This script will apply the post
+# processing suite.  It is nice
+# to have a separate script to
+# be able to test the postprocessing
+# locally before remote deployment.
+#================================
+
+# Split by case study
+tcdfsplit
+
+# Histograms for each case study
+tcdfhist
+
+# Survival filter for each case study
+tcdfalive
