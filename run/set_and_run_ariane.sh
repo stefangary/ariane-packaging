@@ -1,7 +1,6 @@
 #!/bin/bash -norc
 #==============================
 # Set up run space, run ARIANE,
-# and run postprocessing (pp).
 #
 # This script is designed to run
 # INSIDE the ARIANE container.
@@ -49,7 +48,6 @@ ln -sv ../DATA ./ # This does not work if DATA is full of links, ARIANE containe
 #cd ../
 ln -sv ../build_larval_behaviour.sh ./
 ln -sv ../split_file.txt ./
-ln -sv ../post_process_ARIANE_run.sh ./
 
 #------------------------------------------
 # 3) Set larval params for this run
@@ -71,8 +69,3 @@ ln -sv ../post_process_ARIANE_run.sh ./
 rm -f fort.*
 rm -f ariane_memory.log 
 rm -f mod_criter*
-
-#------------------------------------------
-# 5) Postprocess
-#------------------------------------------
-./post_process_ARIANE_run.sh
