@@ -83,3 +83,6 @@ separate files:
     - parallel runs
     - CPU, RAM, disk space, and data transfer needs
 
++ Diary.md, includes my thoughts on the Parallel Works GUI and using Swift
+
+The actual PW workflow is in the pw_workflow directory.
