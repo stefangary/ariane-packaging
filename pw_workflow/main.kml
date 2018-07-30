@@ -1,0 +1,371 @@
+// CACHE ID 195CD29C-86B0-48E8-81D1-5BEA9DF2E2FA-no-provenance
+import(sys)
+import(scheduler)
+import(swift)
+importStdlib(1)
+
+types(
+	xs:schema(
+    			xs:simpleType("file", xs:restriction("string"))
+    )
+)
+swift.field.simout_by_season.file.array.string := swift:field("simout_by_season", "file[string]")
+swift.field.simout_by_year.file.array.int := swift:field("simout_by_year", "file[int]")
+swift.field.final_year.int := swift:field("final_year", "int")
+swift.field.const.float := swift:field("const", "float")
+swift.field.const.string := swift:field("const", "string")
+swift.field.swift.mapper.17003.string := swift:field("swift.mapper.17003", "string")
+swift.field.const.boolean := swift:field("const", "boolean")
+swift.field.stderr_file.file := swift:field("stderr_file", "file")
+swift.field.stdout_file.file := swift:field("stdout_file", "file")
+swift.field.swift.mapper.17006.string := swift:field("swift.mapper.17006", "string")
+swift.field.swift.mapper.17028.string := swift:field("swift.mapper.17028", "string")
+swift.field.swift.mapper.17029.string := swift:field("swift.mapper.17029", "string")
+swift.field.swift.mapper.17008.string := swift:field("swift.mapper.17008", "string")
+swift.field.swift.mapper.17020.int := swift:field("swift.mapper.17020", "int")
+swift.field.start_year.int := swift:field("start_year", "int")
+swift.field.scripts.file.array.int := swift:field("scripts", "file[int]")
+swift.field.simerr_by_year.file.array.int := swift:field("simerr_by_year", "file[int]")
+swift.field.swift.mapper.17030.string := swift:field("swift.mapper.17030", "string")
+swift.field.seasons.string.array.int := swift:field("seasons", "string[int]")
+swift.field.swift.mapper.17014.string := swift:field("swift.mapper.17014", "string")
+swift.field.swift.mapper.17016.string := swift:field("swift.mapper.17016", "string")
+swift.field.swift.mapper.17010.string := swift:field("swift.mapper.17010", "string")
+swift.field.swift.mapper.17032.string := swift:field("swift.mapper.17032", "string")
+swift.field.swift.mapper.17033.string := swift:field("swift.mapper.17033", "string")
+swift.field.swift.mapper.17012.string := swift:field("swift.mapper.17012", "string")
+swift.field.swift.mapper.17034.string := swift:field("swift.mapper.17034", "string")
+swift.field.simerr_by_season.file.array.string := swift:field("simerr_by_season", "file[string]")
+swift.field.temp.int := swift:field("temp", "int")
+swift.field.swift.mapper.17018.string := swift:field("swift.mapper.17018", "string")
+swift.field.swift.mapper.17019.string := swift:field("swift.mapper.17019", "string")
+swift.field.swift.mapper.17031.int := swift:field("swift.mapper.17031", "int")
+swift.field.swift.mapper.17035.int := swift:field("swift.mapper.17035", "int")
+swift.field.const.int := swift:field("const", "int")
+swift.field.swift.mapper.17015.int := swift:field("swift.mapper.17015", "int")
+swift.string.17013 := swift:new(swift.field.const.string, value=".log")
+swift.string.17004 := swift:new(swift.field.const.string, value="stderr_log")
+swift.string.17025 := swift:new(swift.field.const.string, value="DJF")
+swift.string.17024 := swift:new(swift.field.const.string, value="seasons")
+swift.string.17011 := swift:new(swift.field.const.string, value="simout_")
+swift.string.17021 := swift:new(swift.field.const.string, value="start_year")
+swift.string.17002 := swift:new(swift.field.const.string, value="stdout.log")
+swift.string.17005 := swift:new(swift.field.const.string, value="stderr.log")
+swift.string.17000 := swift:new(swift.field.const.string, value="scripts/simwrap.sh")
+swift.string.17001 := swift:new(swift.field.const.string, value="stdout_log")
+swift.string.17009 := swift:new(swift.field.const.string, value="output")
+swift.string.17023 := swift:new(swift.field.const.string, value="final_year")
+swift.string.17017 := swift:new(swift.field.const.string, value="simerr_")
+swift.string.17022 := swift:new(swift.field.const.string, value="1959")
+swift.string.17027 := swift:new(swift.field.const.string, value="output_by_season")
+swift.string.17007 := swift:new(swift.field.const.string, value="scripts")
+swift.string.17026 := swift:new(swift.field.const.string, value="_")
+swift.int.3 := swift:new(swift.field.const.int, value=3)
+start_year := 
+			swift:new(swift.field.start_year.int, readCount=2, _defline=9)
+final_year := 
+			swift:new(swift.field.final_year.int, readCount=2, _defline=10)
+seasons := 
+			swift:new(swift.field.seasons.string.array.int, readCount=2, _defline=20)
+swift.mapper.17003 := 
+			swift:new(swift.field.swift.mapper.17003.string)
+stdout_file := 
+		swift:new(swift.field.stdout_file.file, _defline=25
+			swift:mapping("SingleFileMapper", swift:parameter("file", swift.mapper.17003))
+		)
+swift.mapper.17006 := 
+			swift:new(swift.field.swift.mapper.17006.string)
+stderr_file := 
+		swift:new(swift.field.stderr_file.file, _defline=26
+			swift:mapping("SingleFileMapper", swift:parameter("file", swift.mapper.17006))
+		)
+swift.mapper.17008 := 
+			swift:new(swift.field.swift.mapper.17008.string)
+scripts := 
+		swift:new(swift.field.scripts.file.array.int, readCount=1, _defline=33, input=true
+			swift:mapping("FilesysMapper", swift:parameter("location", swift.mapper.17008))
+		)
+swift.mapper.17010 := 
+			swift:new(swift.field.swift.mapper.17010.string)
+swift.mapper.17012 := 
+			swift:new(swift.field.swift.mapper.17012.string)
+swift.mapper.17014 := 
+			swift:new(swift.field.swift.mapper.17014.string)
+swift.mapper.17015 := 
+			swift:new(swift.field.swift.mapper.17015.int)
+simout_by_year := 
+		swift:new(swift.field.simout_by_year.file.array.int, waitCount=1, readCount=2, _defline=63
+			swift:mapping("simple_mapper", swift:parameter("location", swift.mapper.17010)
+			swift:parameter("prefix", swift.mapper.17012)
+			swift:parameter("suffix", swift.mapper.17014)
+			swift:parameter("padding", swift.mapper.17015))
+		)
+swift.mapper.17016 := 
+			swift:new(swift.field.swift.mapper.17016.string)
+swift.mapper.17018 := 
+			swift:new(swift.field.swift.mapper.17018.string)
+swift.mapper.17019 := 
+			swift:new(swift.field.swift.mapper.17019.string)
+swift.mapper.17020 := 
+			swift:new(swift.field.swift.mapper.17020.int)
+simerr_by_year := 
+		swift:new(swift.field.simerr_by_year.file.array.int, waitCount=1, readCount=2, _defline=64
+			swift:mapping("simple_mapper", swift:parameter("location", swift.mapper.17016)
+			swift:parameter("prefix", swift.mapper.17018)
+			swift:parameter("suffix", swift.mapper.17019)
+			swift:parameter("padding", swift.mapper.17020))
+		)
+
+cat_file_array_int_index_app := function(o, input_array_of_files) {
+	swift:unitStart("PROCEDURE", name="cat_file_array_int_index_app", line=50, outputs="o")
+	swift:waitFor(input_array_of_files)
+	k:tailcall(
+		swift:execute(
+			"cat_file_array_int_index_app",
+				swift:stageIn(input_array_of_files)
+				swift:stageOut(o)
+	  		swift:commands(
+	  				swift:command("cat", null, swiftscript:filename(#_line=52
+	  				o
+	  			), null, swiftscript:filenames(#_line=52
+	  				input_array_of_files
+	  			))
+	  		)
+		)
+	)
+	swift:unitEnd("PROCEDURE", name="cat_file_array_int_index_app", line=50)}
+
+cat_file_array_str_index_app := function(o, input_array_of_files) {
+	swift:unitStart("PROCEDURE", name="cat_file_array_str_index_app", line=54, outputs="o")
+	swift:waitFor(input_array_of_files)
+	k:tailcall(
+		swift:execute(
+			"cat_file_array_str_index_app",
+				swift:stageIn(input_array_of_files)
+				swift:stageOut(o)
+	  		swift:commands(
+	  				swift:command("cat", null, swiftscript:filename(#_line=56
+	  				o
+	  			), null, swiftscript:filenames(#_line=56
+	  				input_array_of_files
+	  			))
+	  		)
+		)
+	)
+	swift:unitEnd("PROCEDURE", name="cat_file_array_str_index_app", line=54)}
+
+simulation := function(o, e, scripts, year_step, season_step) {
+	swift:unitStart("PROCEDURE", name="simulation", line=39, outputs="o,e")
+	swift:waitFor(scripts, year_step, season_step)
+	k:tailcall(
+		swift:execute(
+			"simulation",
+				swift:stageIn(scripts)
+				swift:stageOut(o, e)
+	  		swift:commands(
+	  				swift:command("bash", null, swiftscript:filename(#_line=41
+	  				o
+	  			), swiftscript:filename(#_line=41
+	  				e
+	  			), swift.string.17000, year_step, season_step)
+	  		)
+		)
+	)
+	swift:unitEnd("PROCEDURE", name="simulation", line=39)}
+
+restartLog(name = k:concat(contextAttribute("SWIFT:SCRIPT_NAME"), "-", contextAttribute("SWIFT:RUN_ID"))) {
+	swift:mains(
+		swift:startProgressTicker()
+		uparallel(
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17003)
+				swiftscript:arg$string$string$(#_line=25
+					swift.string.17001, swift.string.17002
+				)
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17006)
+				swiftscript:arg$string$string$(#_line=26
+					swift.string.17004, swift.string.17005
+				)
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17008)
+				swift.string.17007
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17010)
+				swift.string.17009
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17012)
+				swift.string.17011
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17014)
+				swift.string.17013
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17015)
+				swift.int.3
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17016)
+				swift.string.17009
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17018)
+				swift.string.17017
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17019)
+				swift.string.17013
+			)
+			swift:setFieldValue(
+				k:getAndDelete(swift.mapper.17020)
+				swift.int.3
+			)
+			swift:setFieldValue(#_line=9
+				swift:readVar(start_year)
+				swiftscript:toInt(#_line=9
+					swiftscript:arg$string$string$(#_line=9
+						swift.string.17021, swift.string.17022
+					)
+				)
+			)
+			swift:setFieldValue(#_line=10
+				swift:readVar(final_year)
+				swiftscript:toInt(#_line=10
+					swiftscript:arg$string$string$(#_line=10
+						swift.string.17023, swift.string.17022
+					)
+				)
+			)
+			swift:setFieldValue(#_line=20
+				swift:readVar(seasons)
+				swiftscript:strsplit(#_line=20
+					swiftscript:arg$string$string$(#_line=20
+						swift.string.17024, swift.string.17025
+					), swift.string.17026
+				)
+			)
+			swift:tParallelFor(#_line=69, _vvar="yy", wrefs="simout_by_year 1 simerr_by_year 1", rrefs="seasons 1 scripts 1",
+				getArrayIterator(swift:range(swift:readVar(start_year), swift:readVar(final_year)))) {
+
+				swift:unitStart("FOREACH_IT", line=69) 
+				swift.mapper.17028 := 
+							swift:new(swift.field.swift.mapper.17028.string)
+				swift.mapper.17029 := 
+							swift:new(swift.field.swift.mapper.17029.string)
+				swift.mapper.17030 := 
+							swift:new(swift.field.swift.mapper.17030.string)
+				swift.mapper.17031 := 
+							swift:new(swift.field.swift.mapper.17031.int)
+				simout_by_season := 
+						swift:new(swift.field.simout_by_season.file.array.string, waitCount=1, readCount=2, _defline=71
+							swift:mapping("simple_mapper", swift:parameter("location", swift.mapper.17028)
+							swift:parameter("prefix", swift.mapper.17029)
+							swift:parameter("suffix", swift.mapper.17030)
+							swift:parameter("padding", swift.mapper.17031))
+						)
+				swift.mapper.17032 := 
+							swift:new(swift.field.swift.mapper.17032.string)
+				swift.mapper.17033 := 
+							swift:new(swift.field.swift.mapper.17033.string)
+				swift.mapper.17034 := 
+							swift:new(swift.field.swift.mapper.17034.string)
+				swift.mapper.17035 := 
+							swift:new(swift.field.swift.mapper.17035.int)
+				simerr_by_season := 
+						swift:new(swift.field.simerr_by_season.file.array.string, waitCount=1, readCount=2, _defline=72
+							swift:mapping("simple_mapper", swift:parameter("location", swift.mapper.17032)
+							swift:parameter("prefix", swift.mapper.17033)
+							swift:parameter("suffix", swift.mapper.17034)
+							swift:parameter("padding", swift.mapper.17035))
+						)
+				uparallel(
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17028)
+						swift.string.17027
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17029)
+						swift.string.17011
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17030)
+						swift.string.17013
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17031)
+						swift.int.3
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17032)
+						swift.string.17027
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17033)
+						swift.string.17017
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17034)
+						swift.string.17013
+					)
+					swift:setFieldValue(
+						k:getAndDelete(swift.mapper.17035)
+						swift.int.3
+					)
+					swift:tParallelFor(#_line=73, _vvar="ss", wrefs="simout_by_season 1 simerr_by_season 1", rrefs="scripts 1",
+						getArrayIterator(swift:readVar(seasons))) {
+
+						swift:unitStart("FOREACH_IT", line=73) 
+						sequential(
+						   	simulation(#_line=74
+						   		swift:getFieldSubscript(swift:unwrapVar(simout_by_season), ss), swift:getFieldSubscript(swift:unwrapVar(simerr_by_season), ss)
+						   		swift:readVar(scripts), yy, ss
+						   	)
+						   	swift:partialClose(simout_by_season, 1, simerr_by_season, 1)
+						)
+
+						swift:unitEnd("FOREACH_IT", line=73)
+					}
+					sequential(
+					   	cat_file_array_str_index_app(#_line=78
+					   		swift:getFieldSubscript(swift:unwrapVar(simout_by_year), yy)
+					   		swift:readVar(simout_by_season)
+					   	)
+					   	swift:partialClose(simout_by_year, 1)
+					)
+					sequential(
+					   	cat_file_array_str_index_app(#_line=79
+					   		swift:getFieldSubscript(swift:unwrapVar(simerr_by_year), yy)
+					   		swift:readVar(simerr_by_season)
+					   	)
+					   	swift:partialClose(simerr_by_year, 1)
+					)
+				)
+				swift:cleanDataset(simout_by_season)
+				swift:cleanDataset(simerr_by_season)
+				swift:unitEnd("FOREACH_IT", line=69)
+			}
+			cat_file_array_int_index_app(#_line=84
+				k:getAndDelete(stdout_file)
+				swift:readVar(simout_by_year)
+			)
+			cat_file_array_int_index_app(#_line=85
+				k:getAndDelete(stderr_file)
+				swift:readVar(simerr_by_year)
+			)
+		)
+		swift:stopProgressTicker()
+	)
+}
+
+swift:cleanDataset(seasons)
+swift:cleanDataset(simout_by_year)
+swift:cleanDataset(stderr_file)
+swift:cleanDataset(stdout_file)
+swift:cleanDataset(scripts)
+swift:cleanDataset(simerr_by_year)
+swift:cleanDataset(shutdown=true)

@@ -1,0 +1,17 @@
+<tool id='stefanfgary_coral_larvae_parameter_sweep' name='stefanfgary_coral_larvae_parameter_sweep'>
+  <command interpreter='swift'>main.swift</command>
+  <inputs>
+    <param name='start_year' label='Start year' type='text' value='1959' width='50%' help='Select start year for simulation.'>
+    </param>
+    <param name='final_year' label='Final year' type='text' value='1959' width='50%' help='Select final year for simulation.'>
+    </param>
+    <param name='seasons' label='Seasons' type='text' help='Choose one or all of DJF,MAM,JJA,SON' value='DJF MAM JJA SON'>
+    </param>
+  </inputs>
+  <outputs>
+    <data name='stdout_log' format='txt' label='${time.strftime("%Y%m%d-%H%M%S", time.gmtime())}.std.out'>
+    </data>
+    <data name='stderr_log' format='txt' label='${time.strftime("%Y%m%d-%H%M%S", time.gmtime())}.err.out'>
+    </data>
+  </outputs>
+</tool>
