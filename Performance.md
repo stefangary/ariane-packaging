@@ -35,10 +35,14 @@ This is equivalent to: 88GB * 8 Gbits/1GB / 972s = 0.72 Gbit/s.
 The transfer speed of the second test is a 50% increase over the
 first test with a smaller number of CPU.
 
+Note that in these data transfer tests, the hard drive of the
+VM was specified to be an SSD.  Specifying a standard rotational
+drive adds about 5 minutes to the data transfer process.
+
 # Summary of software/data copy tests:
 
 + A node can be prepared from scratch in about 3 minutes.
-+ Input data can be copied over to a node in about 16 minutes.
++ Input data can be copied over to a node in about 16 minutes -> specify SSD!
 
 # Running a single instance - 1st attempt on a stand alone workstation
 
@@ -125,7 +129,7 @@ Since the VM used only 318GB RAM, I stopped the machine, edited its RAM to 340GB
 + 01:35.32 minutes for postprocessing (step 1 only)
 + 52:16.96 minutes for finishing all instances.
 
-During this run, the two extra processors were only at about 5% each and RAM held steady at 318GB, as before.  However, the instances got further out of sync than in the high memory VM test case, above, with a spread of 6 time steps over the instances.  Also, there were distinct times when the CPUs ramped down to wait for disk reading.  This leads me to believe that the kernal buffer cache was not large enough to deal with the spread in the time steps.  In particular, there was only ~335GB - 318GB = 17GB free space for the kernal buffer cache.  Including the model grid information (5GB) and space for a 6-time step spread (2files x 574MB/file x 6 time steps = 6888MB = 6.7GB), the kernal would need a buffer of at least ~12GB.  For an 8-time step spread (possible at certain moments?), the cache would need to be 14GB.  Both of those estimates are less than the available 17GB overhead, so I'm not totally convinced.
+During this run, the two extra processors were only at about 5% each and RAM held steady at 318GB, as before.  However, the instances got further out of sync than in the high memory VM test case, above, with a spread of 6 time steps over the instances.  Also, there were distinct times when the CPUs ramped down to wait for disk reading.  This leads me to believe that the kernal buffer cache was not large enough to deal with the spread in the time steps.  In particular, there was only ~335GB - 318GB = 17GB free space for the kernal buffer cache.  Including the model grid information (5GB) and space for a 6-time step spread (2files x 574MB/file x 6 time steps = 6888MB = 6.7GB), the kernal would need a buffer of at least ~12GB.  For an 8-time step spread (possible at certain moments?), the cache would need to be 14GB.  Both of those estimates are less than the available 17GB overhead, so I'm not totally convinced.  However, when running htop, it's clear that the kernal is fully using whatever cache space is available; the RAM bar is only 3/4 green (actual memory use) and the rest is yellow (cache).  Looking at the CPU usage, at the beginning of the simulation, the processors ramp up quickly but for the first 30 seconds they are mostly red bars (kernal processes) and then go to nearly all green except for occasional red tips for the rest of the simulation.
 
 # Alternative - running all 32 larval perturbations in one ARIANE instance
 
@@ -144,6 +148,40 @@ parallelizing all the CPU time.
 It took 58 minutes and 17GB RAM to run all the particles at once with
 the main output file being 1.1GB before it was split into 32 separate
 files, one for each set of larval behaviors.
+
+# Comparing Skylake versus older CPU architectures
+
+A Skylake, 34 CPU, 416GB RAM, SSD instance, image-ariane-sfg-5
++ copied input data in 16.5 minutes.
++ ran 32 concurrent simulations in 32 minutes.
+
+A Haswell, 34 CPU, 416GB RAM, SSD instance, image-ariane-sfg-5
++ copied input data in 16.75 minutes.
++ ran 32 concurrent simulation in 37 minutes.
+
+A Broadwell, 34 CPU, 416GB RAM, SSD instance, image-ariane-sfg-5
++ copied input data in 16.5 minutes.
++ run 32 concurrent simulations in 36 minutes (but 36 minutes was the time for the slowest simulation, in this case there were simulations that finished at 30 minutes, too.  The other CPU architecture tests all had their simulations finish within +/- a minute of each other.
+
+Can maxing out RAM help run things faster? - No.
+A Skylake, 34 CPU, 624GB RAM, SSD instance, image-ariane-sfg-5
++ copied input data in 15.75 minutes.
++ run 32 concurrent simulations in 42 minutes.
+I was expecting at least a speedup since the RAM was bigger to allow for more caching.  But, it looks like maxing out RAM is not a big help.
+
+How small can I make the RAM while still running fast?
+I already tried 340GB VM which ran slowly, so the target
+RAM for this is somewhere between 340GB and 416GB.  Try 378GB:
+A Skylake, 34 CPU, 378GB, SSD instance, image-ariane-sfg-5
++ copied input data in 15 minutes, 51 seconds.
++ ran 32 concurrent simulations in 38 minutes.  Used all remaining RAM for cache.
+
+Try 400GB RAM
+
+Finally, 64 CPUs do appear to decrease the data copy time.  For 64
+cores,
++ copied input data in 15 minutes.
++ ran 32 concurrent simulations in 32 minutes.
 
 # Summary
 
