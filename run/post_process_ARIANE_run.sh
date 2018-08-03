@@ -11,6 +11,8 @@
 # Postprocessing step 1: convert
 #=====================================
 # Convert to tcdf, output file is t.cdf
+# t.cdf is 33MB, this step takes ~1 minute
+#
 # Default ARIANE output has much more
 # precision than needed, so leverage
 # packing to create smaller output files.
@@ -31,6 +33,10 @@
 # Postprocessing step 2 - split
 #=========================================
 # Spilt trajectories by Case Study
+# This step takes about 9 seconds for 46k
+# trajectories.  Output in split_100XX.nc
+# from [1,12] for the 12 Case Studies.
+# The split trajectories take another 33MB combined.
 /usr/bin/tcdfsplit -F split_file.txt -I t.cdf -J
 
 #=========================================
@@ -38,17 +44,29 @@
 #=========================================
 # This step is the best visualization tool
 # to check if the overall results are reasonable.
+# Also, it will form the basis for
+# determining the spreading rates of the
+# particle tracks.
 #
 # Will need to change the domain of the histogram (-X and -Y flags)
 # and the number of particles (-P flag) to better
 # match the larger-scale, full simulation
-# WISH LIST: auto determine number of particles and domain size.
 # Default output is hist.nc
 # A histogram of all the particles run together
-/usr/bin/tcdfhist -X -80.0 50.0 0.25 -Y 30.0 85.0 0.25 -I t.cdf
+#/usr/bin/tcdfhist -X -80.0 50.0 0.25 -Y 30.0 85.0 0.25 -I t.cdf
 
 # A time-sliced histogram for each Case Study
-
+# All steps take about 35 seconds at 0.25 degree
+# resolution.  Each results in a 32MB file, but
+# since the files are sparse, they each compress
+# to a few hundred K.  Run time includes compression.
+split_list=`ls -1 split_100??.nc`
+for split in $split_list
+do
+    /usr/bin/tcdfhist -X -80.0 50.0 0.25 -Y 30.0 85.0 0.25 -L 0.0 73.0 1.0 -I $split -q
+    mv hist.nc $split.hist
+    gzip -1v $split.hist
+done
 
 #=========================================
 # Postprocessing step 4 - survival
