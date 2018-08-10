@@ -79,8 +79,8 @@ do
     # of GB into a percentage based on the amount of
     # expected GB to be copied.
     current_percentage=`du -h $data_copy_watch_dir | tail -1 | awk -FG -v fs=$final_size '{print int(100*$1/fs)}'`
-    echo $hostname $current_percentage'% data copying...' > tmp.log
-    gsutil mv tmp.log ${report_bn}${hostname}${report_ex}
+    echo $HOSTNAME $current_percentage'% data copying...' > tmp.log
+    gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
     sleep $time_lag
 done
 
