@@ -43,8 +43,8 @@
 
 # Set the distant location for
 # sending the files
-report_bn=gs://viking20/reports/data_copy_node_
-report_ex=.update
+report_bn=gs://viking20/data_copy_node_
+report_ex=.report
 
 # Set the time lag for reporting
 # Default is 2 for watch.
