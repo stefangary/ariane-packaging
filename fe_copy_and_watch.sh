@@ -60,7 +60,7 @@ final_size=89
 
 # Pass the command line params onto the command
 # and run it in the background.
-./copy_data_to_node $@ &
+./copy_data_to_node.sh $@ &
 
 # Get process ID of the copy operation
 copy_pid=$!
