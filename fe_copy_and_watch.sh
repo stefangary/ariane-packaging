@@ -84,6 +84,9 @@ do
     sleep $time_lag
 done
 
+# Make certain we are actually done.
+wait
+
 # Do it one last time when done
 echo $hostname $current_percentage'% data copying done.' > tmp.log
 gsutil mv tmp.log ${report_bn}${hostname}${report_ex}
