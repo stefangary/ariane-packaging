@@ -88,8 +88,8 @@ done
 wait
 
 # Do it one last time when done
-echo $hostname $current_percentage'% data copying done.' > tmp.log
-gsutil mv tmp.log ${report_bn}${hostname}${report_ex}
+echo $HOSTNAME $current_percentage'% data copying done.' > tmp.log
+gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
 
 #####################################################
 # to make things look nice, consider using something like this:
