@@ -71,7 +71,7 @@ copy_pid=$!
 # command output.  If the process does not
 # exist any more, then there will be only
 # one line of output.
-while ( `ps -p $copy_pid | wc -l` > 1 )
+while [ $(ps -p $copy_pid | wc -l) -gt 1 ]
 do
     # Get the number of gigabytes in the input directory
     # which is the last line of the du command and then
