@@ -43,12 +43,15 @@
 
 # Set the distant location for
 # sending the files
-report_bn=gs://viking20/data_copy_node_
-report_ex=.report
+report_bn=gs://viking20/node-
+report_ex=.copy.report
 
 # Set the time lag for reporting
-# Default is 2 for watch.
-time_lag=2
+# Default is 2 for watch, but since
+# many nodes are doing this at the
+# sime time, there's no need for
+# updates quite that fast.
+time_lag=5
 
 # Set the directory to watch for data
 data_copy_watch_dir=/tmp/swiftwork/larval-parameter-sweep
@@ -73,13 +76,28 @@ copy_pid=$!
 # one line of output.
 while [ $(ps -p $copy_pid | wc -l) -gt 1 ]
 do
+    # Get start of the message
+    message="$HOSTNAME $@ |"
+    
     # Get the number of gigabytes in the input directory
     # which is the last line of the du command and then
     # the first number after "G".  Then convert that number
     # of GB into a percentage based on the amount of
     # expected GB to be copied.
     current_percentage=`du -h $data_copy_watch_dir | tail -1 | awk -FG -v fs=$final_size '{print int(100*$1/fs)}'`
-    echo $HOSTNAME $current_percentage'% data copying...' > tmp.log
+    number_steps=$(($current_percentage/10))
+    let ii=1
+    while [ $ii -le $number_steps ]
+    do
+	message="$message#"
+	let ii=$ii+1
+    done
+    while [ $ii -le 10 ]
+    do
+	message="$message-"
+	let ii=$ii+1
+    done
+    echo "$message|$current_percentage% data copying..." > tmp.log
     gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
     sleep $time_lag
 done
@@ -88,7 +106,7 @@ done
 wait
 
 # Do it one last time when done
-echo $HOSTNAME $current_percentage'% data copying done.' > tmp.log
+echo $HOSTNAME $@ $current_percentage'% data copying done.' > tmp.log
 gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
 
 #####################################################
