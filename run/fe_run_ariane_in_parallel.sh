@@ -1,7 +1,7 @@
 #!/bin/bash --norc
 #=======================================
 # Our goal is to try running multiple
-# isntances of ARIANE at the same time
+# instances of ARIANE at the same time
 # so that each instance pulls the same
 # data from the kernal cache, thus
 # minimizing the amount of time data is
