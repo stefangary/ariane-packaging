@@ -31,9 +31,7 @@
 # At the separate location,
 # concatenate all nodes' progress
 # files together like:
-# $ watch cat node_update*.txt
-# or just watch one node with:
-# $ watch cat node_update_my_favorite_node_name.txt
+# $ watch -d gsutil cat gs://viking20/*.copy.report
 # 
 # Stefan Gary, copyright 2018
 # This software is distributed
@@ -108,13 +106,3 @@ wait
 # Do it one last time when done
 echo $HOSTNAME $@ $current_percentage'% data copying done.' > tmp.log
 gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
-
-#####################################################
-# to make things look nice, consider using something like this:
-#echo -ne '#####                     (33%)\r'
-#sleep $time_lag
-#echo -ne '#############             (42%)\r'
-#sleep $time_lag
-#echo -ne '#######################   (100%)\r'
-#echo -ne '\n'
-#####################################################
