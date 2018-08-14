@@ -57,15 +57,20 @@ do
     # the number of present logs on this
     # node.
     run_list=`ls -1 run*.log`
+
+    # Re initialize the current total number of
+    # time steps completed - if we do not do this,
+    # then the accumulator will grow with the
+    # number of times we check on the runs!
+    # Also, if this goes in the loop below, then
+    # this number is too small because it gets
+    # reset to zero when checking on each run,
+    # we want it to get reset each time we start
+    # checking on the ensemble of runs, here.
+    let total_steps_completed=0
     
     for run in $run_list
     do
-	# Re initialize the current total number of
-	# time steps completed - if we do not do this,
-	# then the accumulator will grow with the
-	# number of times we check on the runs!
-	let total_steps_completed=0
-	
 	# Fine tune line prefix for this run
 	message="$message_start $run |"
 	
