@@ -97,7 +97,7 @@ do
     # node summary line which is used by the top
     # level watching script.
     let total_percent_done=`echo $total_steps_completed | awk -v tot=$total_steps_expected '{print int(100*$1/tot)}'`
-    echo "$message $total_percent_done% total percent done." >> tmp${report_ex}
+    echo "$message_start $total_percent_done% total percent done." >> tmp${report_ex}
     
     # Move the report to the cental location
     gsutil mv tmp${report_ex} ${report_bn}${HOSTNAME}${report_ex}
