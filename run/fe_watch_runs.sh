@@ -71,7 +71,7 @@ do
 	
 	# Determine the run progress
 	let run_progress_step=`grep READ\ INPUT\ DATA $run | wc -l`
-	let run_progress_percentage=`echo $run_progress_step | awk '{int(print $1/73)}'`
+	let run_progress_percentage=`echo $run_progress_step | awk '{print int(100*$1/73)}'`
 
 	# Accumulate the number of steps completed over
 	# all runs for this node
@@ -96,7 +96,7 @@ do
     # When done with each separate run, add a final
     # node summary line which is used by the top
     # level watching script.
-    let total_percent_done=`echo $total_steps_completed | awk -v tot=$total_steps_expected '{int(print $1/tot)}'`
+    let total_percent_done=`echo $total_steps_completed | awk -v tot=$total_steps_expected '{print int(100*$1/tot)}'`
     echo "$message $total_percent_done% total percent done." >> tmp${report_ex}
     
     # Move the report to the cental location
