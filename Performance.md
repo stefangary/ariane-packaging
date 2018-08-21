@@ -177,8 +177,8 @@ A Skylake, 34 CPU, 378GB, SSD instance, image-ariane-sfg-5
 + ran 32 concurrent simulations in 38 minutes.  Used all remaining RAM for cache.
 
 A Skylake, 34CPU, 400GB, SSD instance, image-ariane-sfg-5
-+ copied input data
-+ ran 32 concurrent
++ copied input data in 16 minutes
++ ran 32 concurrent simulations in 37 minutes, including postprocessing (2 minutes), so closer to ~35 minutes.
 
 Finally, 64 CPUs do appear to decrease the data copy time.  For 64
 cores,
