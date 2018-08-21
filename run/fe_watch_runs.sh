@@ -70,22 +70,23 @@ do
     # Fine tune line prefix for this run
     message="$message_start|"
     
+	  # Re initialize the current total number of
+	  # time steps completed - if we do not do this,
+	  # then the accumulator will grow with the
+	  # number of times we check on the runs!
+	  let total_steps_completed=0
+   
     for run in $run_list
     do
-	# Re initialize the current total number of
-	# time steps completed - if we do not do this,
-	# then the accumulator will grow with the
-	# number of times we check on the runs!
-	let total_steps_completed=0
 	
-	# Determine the run progress
-	let run_progress_step=`grep READ\ INPUT\ DATA $run | wc -l`
+	    # Determine the run progress
+	    let run_progress_step=`grep READ\ INPUT\ DATA $run | wc -l`
 
-	# Accumulate the number of steps completed over
-	# all runs for this node
-	let total_steps_completed=$total_steps_completed+$run_progress_step
+	    #  Accumulate the number of steps completed over
+	    # all runs for this node
+	    let total_steps_completed=$total_steps_completed+$run_progress_step
 
-	message="$message $run_progress_step"
+  	  message="$message $run_progress_step"
 	
     done
 
