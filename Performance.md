@@ -178,7 +178,14 @@ A Skylake, 34 CPU, 378GB, SSD instance, image-ariane-sfg-5
 
 A Skylake, 34CPU, 400GB, SSD instance, image-ariane-sfg-5
 + copied input data in 16 minutes
-+ ran 32 concurrent simulations in 37 minutes, including postprocessing (2 minutes), so closer to ~35 minutes.
++ ran 32 concurrent simulations in 37 minutes, including postprocessing (~2 minutes), so closer to ~35 minutes.
+
+A Skylake, 34 CPU, 416GB, SSD instance, image-ariane-sfg-6
++ copied input data - unknown due to preemption and not logged
++ 2 nodes finished data copy, 32 concurrent simulations data saving (8 total nodes deployed, but 6 got preempted) in 56.0 minutes and 57.8 minutes (log data to reconstruct: create log file on PW GUI: 13:45:27 = 49527, data saved on bucket at 14:41:25 = 52885s and 14:42:34 = 52994s)
++ So, assuming 16 minute data copy and 2 minutes postprocessing and 2 minutes output compression and copy, 56.0 - 16 - 2 -2 = ~36 minutes and ~38 minutes with uncertainties on the order of 1 minute.
+
+So, it appears that the extra 16 GB of RAM compared to the 400GB node does not help very much.  I wonder if bigger RAM usage makes a preemptible machine more of a target for being preempted.
 
 Finally, 64 CPUs do appear to decrease the data copy time.  For 64
 cores,
