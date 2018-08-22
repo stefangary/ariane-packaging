@@ -129,9 +129,30 @@ the ./run directory.
     - set_and_run_ariane_and_pp.sh <----**BEST** because used for concurrent Docker runs
     
 + Files used for visualization
-    - split_file.txt
-    - V20_full_\<avg|var\>\_TSDQAUV_nopack_v2.nc
+    - split_file.txt <--- Used for splitting into case studies.
+    - V20_full_\<avg|var\>\_TSDQAUV_nopack_v2.nc <--- **NOT USED** because survival filter will not be included in parallelization.
 
-# Step 4: Copy the output to long-term storage
-Not implemented yet.  gs://viking20?
+# Step 3: Run monitoring
+
+There are two main stages in the run:
++ data copy (~16 minutes)
+    - Use fe_copy_and_watch.sh to monitor copying the data.
+    - This watching script is a wrapper around the main data copy script, copy_data_to_node.sh .
+    - This script will create a file for each node that reports the status of the data copy every ~5 seconds or so.  The files are sent to gs://viking20/*.copy.report.
+    - One way to continously monitor the copying is: watch -d --interval gsutil cat gs://viking20/*.copy.report .
+    - The -d option in watch is handy because it highlights changes.  Detecting a preempted node is easy: any node that is lagging and does not get highlighted is gone.
+    - See an example screenshot in doc/data_copy_watching.png .  In this example, 4 out of 8 nodes were preempted (two preempted at 10% and two preempted at ~45%, respectively, copy completion).
+    - If there are lots of nodes working at the same time, then one would want to look at only a subset of the files.
+    
++ simulation and postprocessing (~35 minutes)
+    - Use fe_watch_runs.sh to monitor the simulations.
+    - This watching script is called after all the simulations are started and queries the simulations' log files until they are all complete.
+    - It works very much like the copy monitoring routine except files are send to gs://viking20/*.run.report .
+    - The fe_watch_runs_slow.sh version will show progress bars and list more information but because the files that are created are larger, it impacts disk I/O, which in turn slows the simulation which is heavily dependent on I/O, too.
+    - See an example screenshot in doc/run_watching.png .
+    - In this example, four nodes are running at the same time.  The numbers between the | symbols are the current time step of the 32 concurrent runs on a single node (out of a maximum of 73).  The node name is to the left.  I am not computing percentages to avoid extra overhead with calling awk or bc on the node.  The number to the far right is the total number of time steps achieved so far, over all the runs (out of a maxium of 32*73 = 2336).  Highlighted numbers are runs that have been updated within the last 10 seconds due to the --interval 10 option included with the watch command.
+
+# Step 4: Copy the output to long-term storage.
+
++ Tar all the output directories for the year-season combo run on each node and move it to gs://viking20/output_<year>_<season>.tar.gz
 
