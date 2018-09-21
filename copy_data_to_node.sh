@@ -65,9 +65,10 @@ targetdir='./run/DATA'
 gsutil cp gs://viking20/mesh_mask.nc ./run/mesh_mask.nc
 
 # Copy over ~300MB bottom properties files
-# (only necessary for final stage of postprocessing)
-gsutil cp gs://viking20/V20_full_avg_TSDQAUV_nopack_v2.nc ./run/bottom_avg.nc
-gsutil cp gs://viking20/V20_full_var_TSDQAUV_nopack_v2.nc ./run/bottom_var.nc
+# (only necessary for final stage of postprocessing,
+#  which we will not do here.)
+#gsutil cp gs://viking20/V20_full_avg_TSDQAUV_nopack_v2.nc ./run/bottom_avg.nc
+#gsutil cp gs://viking20/V20_full_var_TSDQAUV_nopack_v2.nc ./run/bottom_var.nc
 
 # For each grid type (U and V absolutely required)
 for grid in $grids2use

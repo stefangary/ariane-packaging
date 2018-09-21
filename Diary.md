@@ -83,5 +83,54 @@ am impressed with the ability of the PW GUI to monitor and
 manage the amount of CPU-hours that are being consumed.  It's
 very straightforward to keep track of what's being used.
 
+# First attempt at a full run - Aug 23, 2018
+ 
+The nodes are continuing to register.  Very slow to access gs://viking20
+to get copy updates, but perhaps this is due to new nodes coming online.
+When the number of nodes plateaus at 187, getting info at the reports
+is fast.  Perhaps cloud storage slows when new files are being created
+but is faster with updated files?
+ 
+Registered workers appears to plateau at 187.  This plateau is first
+due to the available resources at the time, then a separate plateau
+occurrs when we reached our cap for total SSD space on GCE!
+ 
+I am impressed with how fast the registered workers are deleted once
+they are done.  Workers are killed after the max wall time allowed
+which is counted from the time the worker is requested on the PW
+interface, ***not*** when it actually starts working on the
+problem, so it is important to factor in some overhead time in
+the "Auto-shutdown" field of the resources page AND in the
+"Max wall time" field of the resource button (cloud icon) on
+the workflow's compute tab.
+
+I also noted that it is important to clean up a node when done
+because it may be possible that the PW GUI will use that node
+for a second time (if there are not enough resources available)
+and so that means that if the node is not clear, it may have
+trouble overwriting data from the previous run.  In my case, I
+also want to allow at least 2x more time in the "Auto-shutdown"
+and "Max wall time" fields to allow for two cycles on the
+nodes.
+
+# Second attempt at a full run - Sept 17, 2018
+
+Three of the runs used a corrupted file as input, so those
+input files were fixed.
+
+I removed excess Docker images from the node.  I found on the
+GCE documentation ( https://cloud.google.com/compute/docs/disks/performance#ssd-pd-performance )
+that the I/O speed on an SSD depends on both the number of CPU
+(ensuring that there are some unused CPU to manage I/O) as
+well as the size of the SSD.  SSD I/O plateaus after 32 CPU,
+which is great beacuse that is the number we want to use
+anyway.  As for SSD size, 200GB, we get about 96MB/s.  While
+I can shrink the image to 128GB, that would result in SSD
+limits of 61MB/s (36% loss in speed).  If I double the image
+size to 400GB, we get 192MB/s (doubling in speed).  I am
+curious to try this as perhaps we can dramatically speed
+up the calculation (at greater cost, of course).
 
 
+
+ 

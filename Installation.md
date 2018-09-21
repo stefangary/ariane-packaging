@@ -52,4 +52,25 @@ To store the container in a repository:
 + Then, one can pull that container with:
 
     - docker pull repository/new_container_name
-    
+
+# If you need to resize an image:
+
+1) Install weresync
+sudo apt-get install python3-pip
+pip3 install weresync
+
+2) Attach a blank GCE disk to the VM and then
+sudo weresync -C -g 1 -L grub2 /dev/sda /dev/sdb
+
+But this does not work - lots of errors along the way
+and the new disk does not boot on GCE.  I think this
+is because the partition sizes are not the same
+(the target partition is smaller than the source
+partition).
+
+
+Another attempt at resizing disk:
+fsarchiver
+1) basic Ubuntu VM with the image I want to copy and and the new target disk
+2) sudo apt-get install fsarchiver
+3) 
