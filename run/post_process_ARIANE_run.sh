@@ -24,7 +24,9 @@
 # Aside from that, the files and subsequent
 # processing are identical.  We don't need
 # bdep here, so do not pursue further.
-/usr/bin/ariane2tcdf -I ariane_trajectories_qualitative.nc -J -P 
+# Added the -K (bottom index) and -L (kbot)
+# flags.
+/usr/bin/ariane2tcdf -I ariane_trajectories_qualitative.nc -J -P -K -L
 
 # Clean up - remove original output file
 # which is very large.
@@ -38,7 +40,9 @@ rm -f ariane_trajectories_qualitative.nc
 # trajectories.  Output in split_100XX.nc
 # from [1,12] for the 12 Case Studies.
 # The split trajectories take another 33MB combined.
-/usr/bin/tcdfsplit -F split_file.txt -I t.cdf -J
+# Added the -K and -L flags to copy through kkt and kbot
+# in addition to iit,jjt.
+/usr/bin/tcdfsplit -F split_file.txt -I t.cdf -J -K -L
 
 #=========================================
 # Postprocessing step 3 - spatial histogram
@@ -67,10 +71,13 @@ rm -f ariane_trajectories_qualitative.nc
 # Choose 0.25 degree resolution because that is sufficient
 # for studying large-scale (case-study to case-study)
 # pathways.
+# Added the -G 2 option to create an additional histogram
+# that uses only the positions within the two bottom grid
+# boxes.
 split_list=`ls -1 split_100??.nc`
 for split in $split_list
 do
-    /usr/bin/tcdfhist -X -80.0 50.0 0.25 -Y 30.0 85.0 0.25 -L 0.0 73.0 1.0 -I $split -q
+    /usr/bin/tcdfhist -X -80.0 50.0 0.25 -Y 30.0 85.0 0.25 -L 0.0 73.0 1.0 -I $split -q -G 2
     mv hist.nc $split.hist
     gzip -1v $split.hist
 done
