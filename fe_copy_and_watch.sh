@@ -95,7 +95,8 @@ do
 	message="$message-"
 	let ii=$ii+1
     done
-    echo "$message|$current_percentage% data copying..." > tmp.log
+    current_date=`date`
+    echo "$message|$current_percentage% data copying...$current_date" > tmp.log
     gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}
     sleep $time_lag
 done
@@ -104,5 +105,6 @@ done
 wait
 
 # Do it one last time when done
-echo $HOSTNAME $@ $current_percentage'% data copying done.' > tmp.log
+current_date=`date`
+echo $HOSTNAME $@ $current_percentage'% data copying done. '$current_date > tmp.log
 gsutil mv tmp.log ${report_bn}${HOSTNAME}${report_ex}

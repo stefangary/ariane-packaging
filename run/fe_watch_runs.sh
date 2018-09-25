@@ -92,7 +92,8 @@ do
 
     # When done with each separate run, add a final
     # node summary
-    echo "$message | $total_steps_completed" >> tmp${report_ex}
+    current_date=`date`
+    echo "$message | $total_steps_completed $current_date" >> tmp${report_ex}
     
     # Move the report to the cental location
     gsutil mv tmp${report_ex} ${report_bn}${HOSTNAME}${report_ex}
