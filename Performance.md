@@ -192,6 +192,31 @@ cores,
 + copied input data in 15 minutes.
 + ran 32 concurrent simulations in 32 minutes.
 
+# Impact of Image size (and SSD size) on run times
+
+According to GCE documentation at:
+https://cloud.google.com/compute/docs/disks/performance#ssd-pd-performance
+it seems that the read/write speed to an SSD scales
+linearly with the size of the SSD as well as the number
+of CPU.  We have already reached the plateau with
+the number of CPU, so I attempted to double the
+size of the SSD from 200GB to 400GB to test for
+any increase in run time.  I estimate that:
+~15 minutes of data copy time -> 7.5 minutes with doubling of I/O speed
+~1/3*35 = 12 minutes of I/O during sim time -> reduced to 6 minutes
+for a total time savings of ~13 minutes.
+
+However, when running 2 VM's with two (cycling over)
+jobs each, I found that that the execution time was
+about the same or worse as the previous runs:
+Copy    Sim    Save
+20:27	35:49  2:44
+14:33	35:37  6:06
+14:01	37:55  6:03
+20:06	43:30  2:46
+In conclusion, it is not worth expanding the size of
+the images.
+
 # Summary
 
 Counting the time to copy data and the time to actually
