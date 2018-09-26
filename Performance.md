@@ -202,20 +202,21 @@ of CPU.  We have already reached the plateau with
 the number of CPU, so I attempted to double the
 size of the SSD from 200GB to 400GB to test for
 any increase in run time.  I estimate that:
-~15 minutes of data copy time -> 7.5 minutes with doubling of I/O speed
-~1/3*35 = 12 minutes of I/O during sim time -> reduced to 6 minutes
-for a total time savings of ~13 minutes.
+15 minutes of data copy time -> 7.5 minutes with doubling of I/O speed
+1/3*35 = 12 minutes of I/O during sim time -> reduced to 6 minutes
+for a total time savings of 13 minutes.
 
 However, when running 2 VM's with two (cycling over)
 jobs each, I found that that the execution time was
 about the same or worse as the previous runs:
+
 Copy    Sim    Save
 20:27	35:49  2:44
 14:33	35:37  6:06
 14:01	37:55  6:03
 20:06	43:30  2:46
 --------------------
-~17    ~39          avg
+17    39          avg
        
 In conclusion, it is not worth expanding the size of
 the images.
@@ -224,19 +225,20 @@ In another run, I created a new image that is only 150GB
 to test if a smaller image really runs slower as the
 Google Console GUI suggests.  I ran 2 VM's each cycling
 over 2 jobs with the following times:
+
 Copy   Sim   Save
 20:51  49:23 6:54  
 22:10  55:58 2:48
 21:40  38:35 2:28
 20:53  40:05 6:24
 ------------------
-~21   ~46         avg
+21     46         avg
 
 Saving seems to be about the same, perhaps a little slower.
 Simulation times are consistently much higher (7 minutes slower
 on average) as are the data copy times (4 minutes slower).
 The total savings of 200GB SSD instead of 150GB SSD is
-~11 minutes, which is a substantial portion of a ~1 hour
+11 minutes, which is a substantial portion of a 1 hour
 run time.
 
 # Summary
