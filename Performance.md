@@ -226,13 +226,13 @@ to test if a smaller image really runs slower as the
 Google Console GUI suggests.  I ran 2 VM's each cycling
 over 2 jobs with the following times.
 
-Copy   Sim   Save
-20:51  49:23 6:54  
-22:10  55:58 2:48
-21:40  38:35 2:28
-20:53  40:05 6:24
-------------------
-21     46         avg
+| Copy | Sim | Save | Notes |
+| --- | --- | --- | --- |
+| 20:51 | 49:23 | 6:54 |
+| 22:10 | 55:58 | 2:48 |
+| 21:40 | 38:35 | 2:28 |
+| 20:53 | 40:05 | 6:24 |
+| 21 | 46 | | avg |
 
 Saving seems to be about the same, perhaps a little slower.
 Simulation times are consistently much higher (7 minutes slower
