@@ -208,15 +208,15 @@ for a total time savings of 13 minutes.
 
 However, when running 2 VM's with two (cycling over)
 jobs each, I found that that the execution time was
-about the same or worse as the previous runs:
+about the same or worse as the previous runs.
 
-Copy    Sim    Save
-20:27	35:49  2:44
-14:33	35:37  6:06
-14:01	37:55  6:03
-20:06	43:30  2:46
---------------------
-17    39          avg
+| Copy | Sim | Save | Notes |
+|---|---|---|---|
+| 20:27 | 35:49 | 2:44 | |
+| 14:33 | 35:37 | 6:06 | |
+| 14:01 | 37:55 | 6:03 | |
+| 20:06	| 43:30 | 2:46 | |
+| 17 | 39 | | avg |
        
 In conclusion, it is not worth expanding the size of
 the images.
@@ -224,7 +224,7 @@ the images.
 In another run, I created a new image that is only 150GB
 to test if a smaller image really runs slower as the
 Google Console GUI suggests.  I ran 2 VM's each cycling
-over 2 jobs with the following times:
+over 2 jobs with the following times.
 
 Copy   Sim   Save
 20:51  49:23 6:54  
