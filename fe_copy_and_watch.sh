@@ -49,7 +49,7 @@ report_ex=.copy.report
 # many nodes are doing this at the
 # sime time, there's no need for
 # updates quite that fast.
-time_lag=30
+time_lag=60
 
 # Set the directory to watch for data
 data_copy_watch_dir=/tmp/swiftwork/larval-parameter-sweep
