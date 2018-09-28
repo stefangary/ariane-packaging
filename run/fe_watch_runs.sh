@@ -40,7 +40,7 @@ report_ex=.run.report
 # many nodes are doing this at the
 # sime time, there's no need for
 # updates quite that fast.
-time_lag=5
+time_lag=60
 
 # Each run goes though 73 steps and there
 # are 32 runs on each node.
