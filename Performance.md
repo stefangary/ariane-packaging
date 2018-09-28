@@ -241,6 +241,28 @@ The total savings of 200GB SSD instead of 150GB SSD is
 11 minutes, which is a substantial portion of a 1 hour
 run time.
 
+# An attempt to run with local SSD scratch space instead of persistent SSD
+
+It's fairly straightforward to dump the whole workflow into
+a locally mounted SSD which is supposed to be faster than
+persistent disk SSD.  In a test,
+
+| Copy | Sim | Save | Notes |
+| --- | --- | --- | --- |
+| 12:56 | 35:53 | 6:09 |
+| 13:34 | 36:13 | 2:46 |
+| 13:38 | 60:27 | 2:48 |
+| 12:46 | 36:21 | 6:02 |
+| 13:11 | 42:08 | | avg |
+
+Local SSD results in the fastest ever recorded data copy times,
+by about ~2-3 minutes (~20% of the total copy time, or ~5% overall).
+The simulation does not appear to be speeded up very much, however.
+In fact, it seems slower by about ~3 minutes, which is the amount of
+time saved by the copying time.  Of course, the 60min run time may
+be an anomaly, but even still, comparable simulation times are
+achieved by the persistent 200GB SSD, without the local SSD.
+
 # Summary
 
 Counting the time to copy data and the time to actually
