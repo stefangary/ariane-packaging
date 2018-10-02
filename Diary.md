@@ -131,6 +131,98 @@ size to 400GB, we get 192MB/s (doubling in speed).  I am
 curious to try this as perhaps we can dramatically speed
 up the calculation (at greater cost, of course).
 
+# Second attempt at a full scale run Sept 28, 2018
 
+200 workers, all spinning up, first "blue lines"
+appeared after about 145 seconds except for the
+very first worker.  Registration of first ~50
+workers started very shortly thereafter. Adding
+more workers steadily at a rate of 1 every 5 seconds
+or so.  After 350 seconds, at 123 registered workers.
+Data copy appears to be going smoothly across the
+workers. 161 registred workers after 450 seconds.
+Plateau of new registrants at 161, but then a
+block of newbies at ~510 seconds, now at 185,
+broke 187, fully registered at 200 by 575 seconds
+since started the run.  Data copy started on
+all nodes, older nodes are copying lots of
+data.  Based on numbers above, registration
+rate is roughly 100/(161-123) = 2.6s per registration.
 
- 
+More than 400s into the full registration, data
+copy continues to go smoothly.  Several nodes have
+now transitioned to the simulation state.  Getting
+report files from the bucket is very slow because many
+new files are being created.  PW GUI indicates that
+all are running well.
+
+Call up the run.reports now that we are 900s past
+the registration of the last node - pretty certain all
+data copy should be done by this point.
+
+Detected lopsided runs: 00033-00019 (3 cores always at zero.)	 1960-SON	
+	 	  	00033-00115 (8 time step separation)	 1996-DJF
+			159 not starting, looks like dead node.  2005-JJA
+
+Otherwise, appear to be strong runs.
+In the case of 00019, three cores are not going
+because the ARIANE jobs posted to those cores have
+the following errors:
+
+docker: Error response from daemon: containerd: container did not start before the specified timeout.
+
+Did not even create output directories for those
+runs (but did create run logs).  I "unblocked"
+this node by killing fe_watch_runs.sh which was
+waiting for the number of time steps to add up
+to the correct number and the scripts automatically
+proceeded to zip the data and copy it to the bucket.
+Hopefully, that will allow the node to finish
+more or less gracefully.
+
+In the case of 115, all cores are advancing, but
+4 of the cores are much farther ahead than the other
+cores (runs 8,16,17,32).  Nothing strange in htop.
+Amount of RAM, #CPU, storage is as specified.
+Although strange, this doesn't seem to impact the
+overall progress.
+
+Moving on to see what's happening at 159.  Cannot
+log into 159 after several attempts, either via
+PW GUI or GCE console.  On GCE console, green checkmark,
+but I cannot stop nor start the instance.  Very
+confused here.
+
+So, out of the 200, there are two that failed,
+one (19) failed partly due to a docker container failure
+but managed to copy off most of the data anyway.
+The other failure (159) is due to some dead node.
+One (115) also went very slowly, but it's continuing
+to finish and ended up following through.
+
+And, during the data compression stage, 00033-00090
+which was processing 1987-JJA failed.  Actually, I
+had not detected that this run had not started a
+run.report and appears to be on the same level of
+failure as 00033-00159, but it did not get far enough
+to create a run.report.
+
+# Upgrading distribution and docker on my image
+
+1) apt-get update, apt-get upgrade
+2) do-release-upgrade (to 16.04)
+- takes only a few minutes to download
+- takes ~30 minutes, including time for manual prompting
+- kept existing modified /etc/ntp.conf
+- kept existing modified /etc/ssh_config
+- kept existing version of /etc/apt/apt.conf.d/50unattended-upgrades.ucftmp
+3) reboot
+4) sudo apt-get remove docker-ce
+5) apt-getup update, apt-get upgrade
+6) apt autoremove
+7) do-release-upgrade (to 18.04)
+- kept all the existing config files as before.
+8) reboot
+9) apt-getup update, apt-get upgrade
+10) apt autoremove
+11) install Docker-ce
