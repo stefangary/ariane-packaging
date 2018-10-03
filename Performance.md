@@ -263,6 +263,16 @@ time saved by the copying time.  Of course, the 60min run time may
 be an anomaly, but even still, comparable simulation times are
 achieved by the persistent 200GB SSD, without the local SSD.
 
+# Updating image performance
+
+I updated the image to Ubuntu 18 and Docker-ce 18.  But the
+data copy time grew substantially: instead of ~15 minutes,
+copy times are on the order of 2 hours for 80GB (run start
+at 14:47, last update to .copy.report at 16:44).  The
+simulation times seem to be OK (last update to .run.report
+is 17:19, which is ~33 minutes).  There's a problem with
+gsutil or some kind of OS optimization.
+
 # Summary
 
 Counting the time to copy data and the time to actually
