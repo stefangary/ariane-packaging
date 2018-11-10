@@ -5,6 +5,10 @@
 # on many nodes are
 # indeed different.
 #
+# Stefan Gary, 2018
+# Distributed under the terms
+# of the GNU GPL 3.0 or later
+#=======================
 # First, run
 # check_perturbations.sh
 # on each directory we
