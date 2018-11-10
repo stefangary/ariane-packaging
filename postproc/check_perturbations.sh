@@ -4,6 +4,10 @@
 # perturbations executed
 # on a single node are
 # indeed different.
+#
+# Stefan Gary, 2018
+# Distributed under the terms
+# of the GNU GPL 3.0 or laterx
 #=======================
 
 set indir = $1

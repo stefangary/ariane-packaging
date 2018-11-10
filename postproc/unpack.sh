@@ -1,6 +1,10 @@
 #!/bin/tcsh -f
 #====================
 # Unpack data from tarball
+#
+# Stefan Gary, 2018
+# Distributed under the terms
+# of the GNU GPL 3.0 or later
 #====================
 
 # Get critical information about file
