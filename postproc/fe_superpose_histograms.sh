@@ -43,10 +43,14 @@ foreach t1 ( $t1_list_rampup )
    end
 end
 cd ../
+set workdir = `pwd`
 
 #================================================================
 # Process
 #================================================================
+
+# start counter
+@ iteration_count = 1
 
 # Loop over years
 foreach year ( $years_to_use )
@@ -73,23 +77,45 @@ foreach year ( $years_to_use )
 			    # Loop over each case study
 			    foreach case ( $cases_to_use )
 
-				# Link or copy data
+				# Decompress file
+				gunzip split_${case}.nc.hist.gz
 
-				# Operate
-				tcdf_merge_hist
+				if ( $iteration_count == 1 ) then
+				    # No existinig file, so just copy.
+				    /usr/local/bin/tcdf_merge_hist -O out.tmp.nc -K -F split_${case}.nc.hist
+				else
+				    # Link and use input data
+				    ln -sv ${workdir}/superposed_histograms/larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist add.nc.hist
 
-				# Copy out and/or clean up
-				
+				    /usr/local/bin/tcdf_merge_hist -O out.tmp.nc -K -F split_${case}.nc.hist add.nc.hist
+
+				    # Clean up
+				    rm -f add.nc.hist
+				endif
+
+				# Update storage
+				mv -f out.tmp.nc ${workdir}/superposed_histograms/larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist
+
+				# Clean up
+				rm -f split_${case}.nc.hist
+
 			    end
+
+			    # Done with all case studies in this iteration,
+			    # so move back up.
+			    cd ..
 			end
 		    end
 		end
 	    end
 	end
 	
-	# Clean up
+	# Done with all iterations.  Clean up
 	cd ..
 	rm -rf ${year}_${season}
+	@ iteration_count = $iteration_count + 1
 	
     end
 end
+
+# Done looping over years and seasons
