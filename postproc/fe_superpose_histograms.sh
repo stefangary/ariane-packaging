@@ -22,6 +22,8 @@ set s1_list_swimup='0.00020 0.00100'
 set s2_list_swimdn='0.00020 0.00100'
 set d1_list_target='3 13'
 
+set cases_to_use = '10001 10002 10003 10004 10005 10006 10007 10008 10009 10010 10011 10012'
+
 #================================================================
 # Make output directories
 #================================================================
@@ -60,10 +62,31 @@ foreach year ( $years_to_use )
 
 	# For each run, aggregate histograms
 	# Change into each run dir
-	# Link or copy current accumulator histogram
-	# tcdf_merge_hist
-	# overwrite new output file onto the 
+	# Loop over larval parameters
+	foreach t1 ( $t1_list_rampup )
+	    foreach t2 ( $t2_list_surfag )
+		foreach s1 ( $s1_list_swimup )
+		    foreach s2 ( $s2_list_swimdn )
+			foreach d1 ( $d1_list_target )
+			    cd larval_run_${t1}_${t2}_${s1}_${s2}_${d1}
 
+			    # Loop over each case study
+			    foreach case ( $cases_to_use )
+
+				# Link or copy data
+
+				# Operate
+				tcdf_merge_hist
+
+				# Copy out and/or clean up
+				
+			    end
+			end
+		    end
+		end
+	    end
+	end
+	
 	# Clean up
 	cd ..
 	rm -rf ${year}_${season}
