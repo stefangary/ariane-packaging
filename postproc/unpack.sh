@@ -9,10 +9,13 @@
 
 # Get critical information about file
 set bn = `basename $1 .tar.gz`
-set year_season = `awk -F_ '{print $2_$3}'`
+set year = `echo $bn | awk -F_ '{print $2}'`
+set season = `echo $bn | awk -F_ '{print $3}'`
+set year_season = ${year}_${season}
+echo Working on $bn with $year_season
 
 # Unpack
-tar -xvzf $1
+tar -xzf $1
 
 # Make directory to put it in
 mkdir $year_season
