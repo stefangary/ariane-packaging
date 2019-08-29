@@ -114,7 +114,8 @@ done # with t1 loop
 #----------Done with all larval params loops--------------------
 
 # Watch the runs
-./fe_watch_runs.sh &
+# DISABLED FOR NOW TO USE GO AND NOT GOO1.
+#./fe_watch_runs.sh &
 
 # Must include this here because otherwise background
 # processes "detach" from SWIFT control.
