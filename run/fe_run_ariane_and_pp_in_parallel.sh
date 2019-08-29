@@ -105,6 +105,9 @@ do
 		do
 #--------->INSERT COMMAND TO RUN DOCKER CONTAINER HERE
 		    let runnum=$runnum+1
+		    # Mount path for goo1 version of workflow
+		    #docker run --rm --name=ariane_container${runnum} -v/tmp/swiftwork/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
+		    # Mount path for go version of workflow
 		    docker run --rm --name=ariane_container${runnum} -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
 		done # with d1 loop
 	    done # with s2 loop
