@@ -52,7 +52,10 @@ report_ex=.copy.report
 time_lag=60
 
 # Set the directory to watch for data
-data_copy_watch_dir=/tmp/swiftwork/larval-parameter-sweep
+# For use with goo1 workflow
+#data_copy_watch_dir=/tmp/swiftwork/larval-parameter-sweep
+# For use with go workflow
+data_copy_watch_dir=/home/stefanfgary/larval-parameter-sweep
 
 # Set the final expected size of the directory
 # This does not have to be exact.  Currently
