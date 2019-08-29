@@ -105,7 +105,7 @@ do
 		do
 #--------->INSERT COMMAND TO RUN DOCKER CONTAINER HERE
 		    let runnum=$runnum+1
-		    docker run --rm --name=ariane_container${runnum} -v/tmp/swiftwork/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
+		    docker run --rm --name=ariane_container${runnum} -v/home/stefanfgary/larval-parameter-sweep/run:/app/run -w/app/run stefanfgary/ariane ./set_and_run_ariane_and_pp.sh $t1 $t2 $s1 $s2 $d1 &> run${runnum}.log &
 		done # with d1 loop
 	    done # with s2 loop
 	done # with s1 loop
@@ -114,8 +114,7 @@ done # with t1 loop
 #----------Done with all larval params loops--------------------
 
 # Watch the runs
-# DISABLED FOR NOW TO USE GO AND NOT GOO1.
-#./fe_watch_runs.sh &
+./fe_watch_runs.sh &
 
 # Must include this here because otherwise background
 # processes "detach" from SWIFT control.
