@@ -14,8 +14,11 @@ set season = `echo $bn | awk -F_ '{print $3}'`
 set year_season = ${year}_${season}
 echo Working on $bn with $year_season
 
-# Unpack
-tar -xzf $1
+# Unpack everything (slow and takes lots of space)
+#tar -xzf $1
+
+# Unpack just histograms (faster, less disk space usage)
+tar -xzf $1 --exclude 'split*.nc' --exclude 't.cdf' --exclude 'larval_behaviour.txt'
 
 # Make directory to put it in
 mkdir $year_season
