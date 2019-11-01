@@ -19,9 +19,9 @@ do
 # Set up plot
 #=======================================
     if [ "$case" = "1" ]; then
-	gmt psbasemap -JX2i/2i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [km@+2@+]":/a0.2f0.1:"Relative Curvature"::.${case}:${wesn_list[$case_index]} -P -K -X${pdx_list[$case_index]} -Y${pdy_list[$case_index]} > out.ps
+	gmt psbasemap -JX2i/2i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.2f0.1:"Relative Curvature"::.${case}:${wesn_list[$case_index]} -P -K -X${pdx_list[$case_index]} -Y${pdy_list[$case_index]} > out.ps
     else
-	gmt psbasemap -JX2i/2i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [km@+2@+]":/a0.2f0.1:"Relative Curvature"::.${case}:${wesn_list[$case_index]} -P -O -K -X${pdx_list[$case_index]} -Y${pdy_list[$case_index]} >> out.ps
+	gmt psbasemap -JX2i/2i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.2f0.1:"Relative Curvature"::.${case}:${wesn_list[$case_index]} -P -O -K -X${pdx_list[$case_index]} -Y${pdy_list[$case_index]} >> out.ps
     fi
 
 echo ${pdx_list[$case_index]}
@@ -54,7 +54,7 @@ do
     #zero is solid and dotted lines
     #10d is dot-dash and dashed lines
     if [ "$t1" = "0.0" ]; then
-	symbol_type=-S+
+	symbol_type=-Ss
     else
 	symbol_type=-Sc
     fi
@@ -109,11 +109,11 @@ do
 		    fi
 
 		    # build filename to access
-		    include_this_file=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case_num}.nc.hist.ml.out.txt
+		    include_this_file=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case_num}.nc.hist.gz.nc.ml.out.txt
 
 		    # Test list symbol flag options
 		    #			cat $include_this_file | awk '{print $4,$5}' | psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
-		    cat $include_this_file | awk '{print $6,$10}' | psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
+		    cat $include_this_file | awk '{print $6,$10}' | gmt psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
 		    # For testing
 		    #echo $s_flag $w_flag
 		    #			cat $include_this_file | awk '{print $4,$5}' >> tmp.xy
@@ -128,8 +128,8 @@ done # with t1 loop
 
 # Spit out domain found
 echo Case Study $case domain
-gmtmath -Ca tmp.xy UPPER -Sl =
-gmtmath -Ca tmp.xy LOWER -Sl =
+gmt gmtmath -Ca tmp.xy UPPER -Sl =
+gmt gmtmath -Ca tmp.xy LOWER -Sl =
 
 rm -f tmp.xy
 

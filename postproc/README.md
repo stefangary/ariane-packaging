@@ -36,4 +36,5 @@ Second round of processing NatComms submission:
    histogram file, compute the most likley
    time series file for it.
 
-4. 
+4. fe_plot_area_metrics<multi_panel>.sh
+   Plot the results.
