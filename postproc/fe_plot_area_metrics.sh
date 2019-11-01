@@ -6,21 +6,24 @@
 #=======================================
 if [ -f tmp.xy ]; then
     # Spit out domain found
-    upper=`gmtmath -Ca tmp.xy UPPER -Sl =`
-    lower=`gmtmath -Ca tmp.xy LOWER -Sl =`
+    upper=`gmt gmtmath -Ca tmp.xy UPPER -Sl =`
+    lower=`gmt gmtmath -Ca tmp.xy LOWER -Sl =`
     set -- $upper
-    xmax=`gmtmath -Q ${1} CEIL =`
-    ymax=`gmtmath -Q ${2} CEIL =`
+    echo ${1}
+    echo ${2}
+    xmax=`gmt gmtmath -Q ${1} CEIL =`
+    ymax=`gmt gmtmath -Q ${2} CEIL =`
     set -- $lower
-    xmin=`gmtmath -Q ${1} FLOOR =`
-    ymin=`gmtmath -Q ${2} FLOOR =`
+    xmin=`gmt gmtmath -Q ${1} FLOOR =`
+    ymin=`gmt gmtmath -Q ${2} FLOOR =`
 
 #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.2f0.1:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
 else
     # Use default domain
 #    gmt psbasemap -JX6i/6i -R0/400/0/2.5 -Ba100f50:"Relative Area Growth":/a0.5f0.1:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/6i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [km@+2@+]":/a0.2f0.1:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/6i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.2f0.1:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
 
 fi
 #=======================================
@@ -52,7 +55,7 @@ do
     #zero is solid and dotted lines
     #10d is dot-dash and dashed lines
     if [ "$t1" = "0.0" ]; then
-	symbol_type=-S+
+	symbol_type=-Ss
     else
 	symbol_type=-Sc
     fi
@@ -87,12 +90,12 @@ do
 		#dark for slow down
 		if [ "$s2" = "0.00100" ]; then
 		    if [ "$symbol_color" = "black" ]; then
-			w_flag=-Wthick,gray
+			w_flag=-Wthickest,gray
 		    else
-			w_flag=-Wthick,light${symbol_color}
+			w_flag=-Wthickest,light${symbol_color}
 		    fi
 		else
-		    w_flag=-Wthick,${symbol_color}
+		    w_flag=-Wthickest,${symbol_color}
 		fi
 
 		for d1 in $d1_list_target
@@ -109,11 +112,11 @@ do
 		    for case in $cases_list
 		    do
 			# build filename to access
-			include_this_file=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist.ml.out.txt
+			include_this_file=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist.gz.nc.ml.out.txt
 
 			# Test list symbol flag options
 #			cat $include_this_file | awk '{print $4,$5}' | psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
-			cat $include_this_file | awk '{print $6,$10}' | psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
+			cat $include_this_file | awk '{print $6,$10}' | gmt psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
 			# For testing
 			echo $s_flag $w_flag
 #			cat $include_this_file | awk '{print $4,$5}' >> tmp.xy
@@ -127,8 +130,8 @@ done # with t1 loop
 #----------Done with all larval params loops--------------------
 
 # Spit out domain found
-gmtmath -Ca tmp.xy UPPER -Sl =
-gmtmath -Ca tmp.xy LOWER -Sl =
+gmt gmtmath -Ca tmp.xy UPPER -Sl =
+gmt gmtmath -Ca tmp.xy LOWER -Sl =
 
 ps2pdf out.ps
 rm -f out.ps
