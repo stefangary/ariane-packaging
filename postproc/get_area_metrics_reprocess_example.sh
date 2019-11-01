@@ -4,14 +4,15 @@
 # output file, compute the area
 # growth index values.
 #
-# Stefan Gary, 2019
+# Stefan Gary, 2018
 # This software is distributed under
 # the terms of the GNU GPL v3 or later.
 #=========================
 
 #====================================
+# THIS IS ALREADY DONE
 # Compute the time series for this file
-tcdf_most_likely -S -I $1
+#tcdf_most_likely -S -I $1
 #====================================
 
 # The area_growth is just the change in area
@@ -37,6 +38,9 @@ tcdf_most_likely -S -I $1
 # be very slow initial growth followed by fast later
 # growth.
 
+# Link to exisitng output file from tcdf_most_likely.
+ln -sv ${1}.ml ml_mask.nc
+
 # For deliverable, go to 185 days only
 # Every 5 days, 185/5 = 37, that's the 
 # cut off instead of 73 (1 year)
@@ -57,7 +61,10 @@ quit
 EOF
 
 # Clean up
-mv ml_mask.nc ${1}.ml
-
-# Overwrite existing text output file (if present)
+# File already created from previous
+# run of this script, so remove the
+# symbolic link created above.
+#mv ml_mask.nc ${1}.ml
+rm -f ml_mask.nc
+# Overwrite existing text output file
 mv -f out.tmp.txt ${1}.ml.out.txt
