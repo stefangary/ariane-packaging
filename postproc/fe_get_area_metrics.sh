@@ -10,20 +10,37 @@
 # under the GNU GPL v3 or later.
 #========================
 
-foreach dir ( larval_run_* )
+#set seasons_to_use = 'DJF MAM JJA SON ALL'
+set seasons_to_use = 'ALL'
 
-    echo Working on $dir
+foreach season ( $seasons_to_use )
+    cd all_${season}
 
-    cd $dir
+    # Work on all directories for this season
+    foreach dir ( larval_run_* )
 
-    ln -sv ../get_area_metrics_ring.sh ./
+	echo Working on $dir
 
-    foreach file ( split_2*.nc.hist )
-	get_area_metrics_ring.sh $file
+	cd $dir
+
+	ln -sv /mnt/md0/sa03sg/work/PW_results/larval-parameter-sweep/postproc/get_area_metrics.sh ./
+
+	foreach file ( split_*.nc.hist.gz )
+	    # Decompress
+	    gunzip -c ${file} > ${file}.nc
+
+	    # Process
+	    get_area_metrics.sh ${file}.nc
+
+	    # Clean up
+	    rm -f ${file}.nc
+	end
+
+	# Clean up
+	rm -f get_area_metrics.sh
+	cd ..
     end
 
-    # Clean up
-    rm -f get_area_metrics_ring.sh
     cd ..
 
 end
