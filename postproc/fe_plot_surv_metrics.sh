@@ -121,6 +121,7 @@ do
 
 			paste $include_this_file $include_this_file2 | awk '{print $6,$11}' | gmt psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
 			paste $include_this_file $include_this_file2 | awk '{print $6,$11}' >> tmp.xy
+
 		    done # with case loop
 		done # with d1 loop
 	    done # with s2 loop
@@ -130,8 +131,24 @@ done # with t1 loop
 #----------Done with all larval params loops--------------------
 
 # Spit out domain found
-gmt gmtmath -Ca tmp.xy UPPER -Sl =
-gmt gmtmath -Ca tmp.xy LOWER -Sl =
+set upper = `gmt gmtmath -Ca tmp.xy UPPER -Sl =`
+set lower = `gmt gmtmath -Ca tmp.xy LOWER -Sl =`
+
+# Compute line of best fit
+# -N sets 3 columns with time in 1st column
+# -A sets up linear solver based on input.
+gmt gmtmath -N3/1 -Atmp.xy -C0 1 ADD -Ca LSQFIT = fit.si
+
+# Plot line of best fit
+slope=`tail -1 fit.si`
+inter=`head -1 fit.si`
+echo 0.0 $inter > line.xy
+upper=`gmt gmtmath -Ca tmp.xy UPPER -Sl =`
+set -- $upper
+xmax=`gmt gmtmath -Q ${1} CEIL =`
+ymax=`gmt gmtmath -Q $xmax $slope MUL $inter ADD =`
+echo $xmax $ymax >> line.xy
+gmt psxy line.xy -J -R -B -Wthin,green -P -O -K >> out.ps
 
 ps2pdf out.ps
 rm -f out.ps
