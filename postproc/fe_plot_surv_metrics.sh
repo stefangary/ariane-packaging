@@ -142,6 +142,7 @@ gmt gmtmath -N3/1 -Atmp.xy -C0 1 ADD -Ca LSQFIT = fit.si
 # Plot line of best fit
 slope=`tail -1 fit.si`
 inter=`head -1 fit.si`
+echo Line of best fit is $slope and $inter
 echo 0.0 $inter > line.xy
 upper=`gmt gmtmath -Ca tmp.xy UPPER -Sl =`
 set -- $upper

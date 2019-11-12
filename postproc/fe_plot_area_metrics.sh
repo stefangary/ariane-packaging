@@ -20,6 +20,7 @@ if [ -f tmp.xy ]; then
     # Manual figure tuning
     # Based on experience, ymax should be < 0.6
     ymax=0.6
+    ymin=0.1
     
 #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
     #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
