@@ -18,17 +18,16 @@ if [ -f tmp.xy ]; then
     ymin=`gmt gmtmath -Q ${2} FLOOR =`
 
     # Manual figure tuning
-    # Based on experience, ymax should be < 0.6
-    ymax=0.6
-    ymin=0.1
+    # Based on experience, ymax should be < ???
+    ymax=100
     
 #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
     #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/4i -R${xmin}/${xmax}/${ymin}/${ymax} -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/4i -R${xmin}/${xmax}/${ymin}/${ymax} -Ba1e12f1e11:"Area Growth [m@+2@+]":/a10f5:"Along-bathymetry retention":WeSn -P -K -X1i -Y1i >> out.ps
 else
     # Use default domain
 #    gmt psbasemap -JX6i/6i -R0/400/0/2.5 -Ba100f50:"Relative Area Growth":/a0.5f0.1:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/6i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/6i -R0/3e12/10/100 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a10f5:"Along-bathymetry retention":WeSn -P -K -X1i -Y1i >> out.ps
 
 fi
 #=======================================
@@ -118,14 +117,11 @@ do
 		    do
 			# build filename to access
 			include_this_file=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist.gz.nc.ml.out.txt
+			include_this_file2=larval_run_${t1}_${t2}_${s1}_${s2}_${d1}/split_${case}.nc.hist.gz.nc.sv.out.txt
 
-			# Test list symbol flag options
-#			cat $include_this_file | awk '{print $4,$5}' | psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
-			cat $include_this_file | awk '{print $6,$10}' | gmt psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
-			# For testing
-			echo $s_flag $w_flag
-#			cat $include_this_file | awk '{print $4,$5}' >> tmp.xy
-			cat $include_this_file | awk '{print $6,$10}' >> tmp.xy
+			paste $include_this_file $include_this_file2 | awk '{print $6,$11}' | gmt psxy -J -R -B $s_flag $w_flag -P -O -K >> out.ps
+			paste $include_this_file $include_this_file2 | awk '{print $6,$11}' >> tmp.xy
+
 		    done # with case loop
 		done # with d1 loop
 	    done # with s2 loop
@@ -135,8 +131,25 @@ done # with t1 loop
 #----------Done with all larval params loops--------------------
 
 # Spit out domain found
-gmt gmtmath -Ca tmp.xy UPPER -Sl =
-gmt gmtmath -Ca tmp.xy LOWER -Sl =
+set upper = `gmt gmtmath -Ca tmp.xy UPPER -Sl =`
+set lower = `gmt gmtmath -Ca tmp.xy LOWER -Sl =`
+
+# Compute line of best fit
+# -N sets 3 columns with time in 1st column
+# -A sets up linear solver based on input.
+gmt gmtmath -N3/1 -Atmp.xy -C0 1 ADD -Ca LSQFIT = fit.si
+
+# Plot line of best fit
+slope=`tail -1 fit.si`
+inter=`head -1 fit.si`
+echo Line of best fit is $slope and $inter
+echo 0.0 $inter > line.xy
+upper=`gmt gmtmath -Ca tmp.xy UPPER -Sl =`
+set -- $upper
+xmax=`gmt gmtmath -Q ${1} CEIL =`
+ymax=`gmt gmtmath -Q $xmax $slope MUL $inter ADD =`
+echo $xmax $ymax >> line.xy
+gmt psxy line.xy -J -R -B -Wthin,green -P -O -K >> out.ps
 
 ps2pdf out.ps
 rm -f out.ps
