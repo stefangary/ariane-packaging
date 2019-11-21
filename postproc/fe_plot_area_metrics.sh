@@ -24,11 +24,11 @@ if [ -f tmp.xy ]; then
     
 #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
     #    gmt psbasemap -JX6i/6i -R${xmin}/${xmax}/${ymin}/${ymax} -B:"Relative Area Growth":/:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/4i -R${xmin}/${xmax}/${ymin}/${ymax} -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/4i -R${xmin}/${xmax}/${ymin}/${ymax} -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y3i > out.ps
 else
     # Use default domain
 #    gmt psbasemap -JX6i/6i -R0/400/0/2.5 -Ba100f50:"Relative Area Growth":/a0.5f0.1:"Relative Area Growth Curvature":WeSn -P -K -X1i -Y1i >> out.ps
-    gmt psbasemap -JX6i/6i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y1i >> out.ps
+    gmt psbasemap -JX6i/6i -R0/3e12/-0.3/1.1 -Ba1e12f1e11:"Area Growth [m@+2@+]":/a0.1f0.05:"Relative Curvature":WeSn -P -K -X1i -Y3i > out.ps
 
 fi
 #=======================================
@@ -134,6 +134,10 @@ do
 done # with t1 loop
 #----------Done with all larval params loops--------------------
 
+# Add a psuedo-axis for retention based on the
+# linear fit to the retention plot.
+gmt psbasemap -JX-6i/1i -R33.2/94.5/-0.3/1.1 -Ba10f5:"Along-bathymetry percent retention [\%]":/a1S -P -O -K -X0i -Y-1i >> out.ps
+			
 # Spit out domain found
 gmt gmtmath -Ca tmp.xy UPPER -Sl =
 gmt gmtmath -Ca tmp.xy LOWER -Sl =
