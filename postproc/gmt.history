@@ -1,0 +1,10 @@
+# GMT 5 Session common arguments shelf
+BEGIN GMT 5.4.3
+B	a10f5:Along-bathymetry percent retention [\%]:/a1S
+J	X
+JX	X-6i/1i
+R	//-0.3/1.1
+X	0i
+Y	-1i
+L	33
+END
