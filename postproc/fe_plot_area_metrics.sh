@@ -136,7 +136,10 @@ done # with t1 loop
 
 # Add a psuedo-axis for retention based on the
 # linear fit to the retention plot.
-gmt psbasemap -JX-6i/1i -R33.2/94.5/-0.3/1.1 -Ba10f5:"Along-bathymetry percent retention [\%]":/a1S -P -O -K -X0i -Y-1i >> out.ps
+xmin2=`gmt gmtmath -Q $xmin -6.44e-12 MUL 94.5 ADD =`
+xmax2=`gmt gmtmath -Q $xmax -6.44e-12 MUL 94.5 ADD =`
+#Note reverse direction on axis!
+gmt psbasemap -JX-6i/1i -R$xmax2/$xmin2/-0.3/1.1 -Ba10f5:"Along-bathymetry percent retention [\%]":/a1S -P -O -K -X0i -Y-1i >> out.ps
 			
 # Spit out domain found
 gmt gmtmath -Ca tmp.xy UPPER -Sl =
